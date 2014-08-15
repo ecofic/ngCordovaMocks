@@ -1,0 +1,27 @@
+{
+  "name": "ngCordovaMocks",
+  "version": "0.1.0",
+  "homepage": "https://github.com/ecofic/ngCordovaMocks",
+  "authors": [
+    "Chad Campbell <chad.campbell@ecofic.com>"
+  ],
+  "description": "A mock library for ngCordova.",
+  "keywords": [
+    "angular",
+    "angularjs",  
+    "cordova",
+    "phonegap"
+  ],
+  "devDependencies": {
+    "angularjs": "*",
+    "angular-mocks": "~1.2.1"  
+  },
+  "license": "Apache",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
