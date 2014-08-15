@@ -7,6 +7,8 @@
 'use strict';
 module.exports = function (grunt) {
     grunt.initConfig({
+        moduleInit: '\'use strict\';\n' +
+                    'var ngCordovaMocks = angular.module(\'ngCordovaMocks\', []);',
         banner: '/*\nCopyright <%= grunt.template.today("mm-dd-yyyy") %> Ecofic LLC \n' +
                 'http://www.ecofic.com\n\n' +
                 'Licensed under the Apache License, Version 2.0 (the "License");\n' +
@@ -17,9 +19,7 @@ module.exports = function (grunt) {
                 'distributed under the License is distributed on an "AS IS" BASIS,\n' +
                 'WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n' +
                 'See the License for the specific language governing permissions and\n' +
-                'limitations under the License.\n' +
-                '*/',
-
+                'limitations under the License.\n*/',
         clean: {
             mocks: [
                 'dist/**/*'
@@ -75,6 +75,16 @@ module.exports = function (grunt) {
         },
 
         usebanner: {
+            module: {
+                options: {
+                    position: 'top',
+                    linebreak: true,
+                    banner: '<%= moduleInit %>'
+                },  
+                files: {
+                    src: [ 'dist/ngCordovaMocks.js', 'dist/ngCordovaMocks.min.js' ]
+                }                
+            },
             mocks: {
                 options: {
                     position: 'top',
@@ -95,7 +105,7 @@ module.exports = function (grunt) {
     require('time-grunt')(grunt);     
 
     // Setup the "test" task
-    grunt.registerTask('test', ['clean', 'concat:mocks', 'uglify:mocks', 'usebanner:mocks', 'jasmine:mocks']);
+    grunt.registerTask('test', ['clean', 'concat:mocks', 'usebanner:module', 'uglify:mocks', 'usebanner:mocks', 'jasmine:mocks']);
 
     // By default, lint and run all tests.
     grunt.registerTask('default', ['jshint:mocks', 'test']);    

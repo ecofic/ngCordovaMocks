@@ -1,24 +1,25 @@
-'use strict';
-angular.module('ngCordovaMocks', [])
-	.factory('$cordovaNetwork', function () {
-		var connectionType = 'WiFi connection';
-		var isConnected = true;
+/**
+ *
+ */
+ngCordovaMocks.factory('$cordovaNetwork', function () {
+	var connectionType = 'WiFi connection';
+	var isConnected = true;
 
-		return {
-			connectionType: connectionType,
-			isConnected: isConnected,
+	return {
+		// Properties intended to mock test scenarios
+		connectionType: connectionType,
+		isConnected: isConnected,
 
-			getNetwork: function () {
-				return connectionType;
-			},
+		getNetwork: function () {
+			return this.connectionType;
+		},
 
-			isOnline: function () {
-				return isConnected;
-			},
+		isOnline: function () {
+			return this.isConnected;
+		},
 
-			isOffline: function () {
-				return false;
-			}
-		};
-	})
-;
+		isOffline: function () {
+			return !this.isConnected;
+		}
+	};
+});
