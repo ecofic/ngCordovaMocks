@@ -16,30 +16,48 @@
 */
 
 /*
- * A service for testing camera features
+ * A service for mocking the accelerometer 
  * in an app build with ngCordova.
  */ 
-ngCordovaMocks.factory('$cordovaCamera', function() {
+ngCordovaMocks.factory('$cordovaDeviceMotion', ['$interval', function ($interval) {
+	var currentAcceleration = null;
 	var throwsError = false;
 
 	return {
 		// Properties intended to mock test scenarios
+		currentAcceleration: currentAcceleration,
 		throwsError: throwsError,
 
-		getPicture: function(options, onSuccess, onError) {
+		getAcceleration: function () {
+			return this.currentAcceleration;
+		},
+
+		watchAcceleration : function (onSuccess, onError, options) {
 			if (this.throwsError) {
 				if (onError) {
-					onError('There was an error');
+					onError('There was an error getting the acceleration.');
 				}
 			} else {
+				var watchId = null;
+				var delay = 10000;
+
 				if (options) {
-					options = options;	// This is just to get by JSHint.
+					if (options.period) {
+						delay = options.period;
+					}
 				}
 
 				if (onSuccess) {
-					onSuccess();
+					watchId = $interval(onSuccess, delay);
 				}
+				return watchId;
+			}
+		},
+
+		clearWatch : function (watchId) {
+			if (watchId) {
+				$interval.cancel(watchId);
 			}
 		}
 	};
-});
+}]);

@@ -16,7 +16,8 @@
 */
 
 /*
- * A service for testing networked fetures in an app build with AngularJS and Cordova.
+ * A service for testing networked fetures 
+ * in an app build with ngCordova.
  */ 
 ngCordovaMocks.factory('$cordovaNetwork', function () {
 	var connectionType = 'WiFi connection';

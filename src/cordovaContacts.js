@@ -17,7 +17,7 @@
 
 /*
  * A service for testing features related with contacts 
- * in an app build with AngularJS and Cordova.
+ * in an app build with ngCordova.
  */ 
 ngCordovaMocks.factory('$cordovaContacts', function() {
 	var throwsError = false;
