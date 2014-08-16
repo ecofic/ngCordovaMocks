@@ -19,39 +19,68 @@
  * A service for mocking the accelerometer 
  * in an app build with ngCordova.
  */ 
-ngCordovaMocks.factory('$cordovaDeviceMotion', ['$interval', function ($interval) {
+ngCordovaMocks.factory('$cordovaDeviceMotion', ['$interval', '$q', function ($interval, $q) {
 	var currentAcceleration = null;
 	var throwsError = false;
+	var positions = [];
+	var watchIntervals = [];
 
 	return {
 		// Properties intended to mock test scenarios
 		currentAcceleration: currentAcceleration,
 		throwsError: throwsError,
+		positions: positions,
+		watchIntervals: watchIntervals,
 
-		getAcceleration: function () {
-			return this.currentAcceleration;
+		getCurrentAcceleration: function () {
+			var defer = $q.defer();
+			if (this.throwsError) {
+				defer.reject('There was an error getting the current acceleration.');
+			} else {
+				defer.resolve(this.currentAcceleration);
+			}
+			return defer.promise;
 		},
 
-		watchAcceleration : function (onSuccess, onError, options) {
+		watchAcceleration : function (options) {
+			var defer = $q.defer();
+			var watchId = Math.floor((Math.random() * 1000000) + 1);
+			this.positions = [];
+
 			if (this.throwsError) {
-				if (onError) {
-					onError('There was an error getting the acceleration.');
-				}
+				defer.reject('There was an error watching the current acceleration.');
 			} else {
-				var watchId = null;
-				var delay = 10000;
+				var delay = 10000;		// The default based on https://github.com/apache/cordova-plugin-device-motion/blob/master/doc/index.md
+				if (options && options.frequency) {
+					delay = options.frequency;
+				}				
 
-				if (options) {
-					if (options.period) {
-						delay = options.period;
-					}
-				}
+				this.watchIntervals.push($interval(
+					function() {
+						if (this.throwsError) {
+							defer.reject('There was an error watching the acceleration.');
+						}
 
-				if (onSuccess) {
-					watchId = $interval(onSuccess, delay);
-				}
-				return watchId;
+						// Generate a random position
+						var randomX = Math.floor((Math.random() * 100) + 1);
+						var randomY = Math.floor((Math.random() * 100) + 1);
+						var randomZ = Math.floor((Math.random() * 100) + 1);
+						var result = { x: randomX, y: randomY, z:randomZ, timestamp:Date.now() };
+
+						console.log('logged position.');
+						positions.push(result);
+						defer.notify(result);	
+					}, 
+					delay
+				));
+
+				defer.resolve(this.currentAcceleration);
 			}
+
+			return {
+				watchId: watchId,
+				promise: defer.promise
+			};
 		},
 
 		clearWatch : function (watchId) {

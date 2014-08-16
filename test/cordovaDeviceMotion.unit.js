@@ -4,34 +4,43 @@ describe('ngCordovaMocks', function() {
 	});
 
 	describe('cordovaDeviceMotion', function () {
+		var interval = null;		
+		var rootScope = null;
 		var motionService = null;
-		var motionServiceOptions = { period: 100 };
+		var motionServiceOptions = { period: 1000 };
 
-		beforeEach(inject(function ($cordovaDeviceMotion) {
+		beforeEach(inject(function ($cordovaDeviceMotion, $interval, $rootScope) {
 			motionService = $cordovaDeviceMotion;
+			rootScope = $rootScope;
+			interval = $interval;
 		}));
 
-		it('should get the current acceleration', function () {
-			var expectedAcceleration = { x:1, y:1, z:1, timestamp:Date() };
-			motionService.currentAcceleration = expectedAcceleration;
+		it('should get the current acceleration', function (done) {
+			var expected = { x:1, y:1, z:1, timestamp:Date() };
+			motionService.currentAcceleration = expected;
 
-			var resultedAcceleration = motionService.getAcceleration();
-			expect(resultedAcceleration).toEqual(expectedAcceleration);
+			motionService.getCurrentAcceleration()
+				.then(
+					function(actual) { expect(actual).toBe(expected); },
+					function() { expect(false).toBe(true); }
+				)
+				.finally(function() { done(); })
+			;
+
+			rootScope.$digest();
 		});
 
-		it('should throw an error while getting the motion.', function() {
+		it('should throw an error while getting the currentAcceleration.', function(done) {
 			motionService.throwsError = true;
-			motionService.watchAcceleration(
-				function() {
-					expect(true).toBe(false);
-				},
-				function() {
-					expect(true).toBe(true);
-				},
-				motionServiceOptions
-			);
-		});
+			motionService.getCurrentAcceleration()
+				.then(
+					function(actual) { expect(false).toBe(true); },
+					function() { expect(true).toBe(true); }
+				)
+				.finally(function() { done(); })
+			;
 
-		// TODO: Write a test that tracks getting five points over an interval.
+			rootScope.$digest();			
+		});
 	});
 })

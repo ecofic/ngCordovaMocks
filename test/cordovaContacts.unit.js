@@ -4,71 +4,63 @@ describe('ngCordovaMocks', function() {
 	});
 
 	describe('cordovaContacts', function () {
+		var rootScope = null;
 		var contactService = null;
 		var findOptions = {};
-		var filter = '';
-		var multiple = false;
 
-		beforeEach(inject(function ($cordovaContacts) {
+		beforeEach(inject(function ($cordovaContacts, $rootScope) {
 			contactService = $cordovaContacts;
+			rootScope = $rootScope;
 		}));
 
-		it('should create a contact', function () {
+		it('should save a contact', function (done) {
 			var contact = {};
-			contactService.create(contact);
-			expect(true).toBe(true);
+			contactService.save(contact)
+				.then(
+					function() { expect(true).toBe(true); },
+					function() { expect(false).toBe(true); }
+				)
+				.finally(function() { done(); })
+			;
+
+			rootScope.$digest();			
 		});
 
-		it('should find a contact', function() {
-			contactService.find(
-				function() {
-					expect(true).toBe(true);
-				},
-				function(error) {
-					expect(false).toBe(true);
-				},
-				findOptions,
-				filter,
-				multiple
-			)
+		it('should find an existing contact', function(done) {
+			contactService.find(findOptions)
+				.then(
+					function() { expect(true).toBe(true); },
+					function(error) { expect(false).toBe(true); }
+				)
+				.finally(function() { done(); })
+			;
+
+			rootScope.$digest();
 		});
 
-		it('should throw an error while finding a contact.', function() {
+		it ('should not find a specific contact', function(done) {
+			contactService.find(findOptions)
+				.then(
+					function() { expect(true).toBe(true); },
+					function(error) { expect(false).toBe(true); }
+				)
+				.finally(function() { done(); })
+			;
+
+			rootScope.$digest();			
+		});
+
+		it('should throw an error while finding a contact.', function(done) {
 			contactService.throwsError = true;
-			contactService.find( 
-				function() {
-					expect(true).toBe(false);
-				},
-				function(error) {
-					expect(true).toBe(true);
-				},
-				findOptions,
-				filter,
-				multiple
-			);
-		});	
+			contactService.find(findOptions)
+				.then(
+					function() { expect(false).toBe(true); },
+					function(error) { expect(true).toBe(true); }
+				)
+				.finally(function() { done(); })
+			;
 
-		it('should pick a contact', function() {
-			contactService.pickContact(
-				function() {
-					expect(true).toBe(true);
-				},
-				function(error) {
-					expect(false).toBe(true);
-				}
-			);
-		});
-
-		it('should throw an error while picking a contact.', function() {
-			contactService.throwsError = true;
-			contactService.pickContact(
-				function() {
-					expect(false).toBe(true);
-				},
-				function(error) {
-					expect(true).toBe(true);
-				}
-			);
+			rootScope.$digest();			
 		});
 	});
 })

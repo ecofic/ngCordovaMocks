@@ -19,57 +19,50 @@
  * A service for testing features related with contacts 
  * in an app build with ngCordova.
  */ 
-ngCordovaMocks.factory('$cordovaContacts', function() {
+ngCordovaMocks.factory('$cordovaContacts', ['$q', function($q) {
 	var throwsError = false;
+	var contacts = [];
 
 	return {
 		// Properties intended to mock test scenarios
 		throwsError: throwsError,
+		contacts: contacts,
 
-		create: function(contact) {
-			if (contact) {
+		save: function(contact) {
+			var defer = $q.defer();
+			if (this.throwsError) {
+				defer.reject('There was an error saving the contact.');
+			} else {
+				this.contacts.push(contact);
+				defer.resolve();
+			}
+			return defer.promise;
+		},
+
+		remove: function(contact) {
+			var defer = $q.defer();
+			if (this.throwsError) {
+				defer.reject('There was an error saving the contact.');
+			} else {
+				// TODO: Once the structure of the contact object is better
+				// understood, it needs to be removed from this.contacts
 				contact = contact;	// This is just to get by JSHint.
+				defer.resolve();
 			}
+			return defer.promise;
 		},
 
-		find: function(onSuccess, onError, contactFields, contactFindOptions, filter, multiple) {
+		find: function(options) {
+			var defer = $q.defer();
 			if (this.throwsError) {
-				if (onError) {
-					onError('There was an error');
-				}
+				defer.reject('There was an error finding the contact.');
 			} else {
-				if (contactFields) {
-					contactFields = contactFields;	// This is just to get by JSHint.
-				}
-
-				if (contactFindOptions) {
-					contactFindOptions = contactFindOptions;	// This is just to get by JSHint.
-				}
-
-				if (filter) {
-					filter = filter;				// This is just to get by JSHint.
-				}
-
-				if (multiple) {
-					multiple = multiple;			// This is just to get by JSHint.
-				}
-
-				if (onSuccess) {
-					onSuccess();
-				}
+				// TODO: Once the structure of a contact object is better
+				// understood, we need to return matching entities from this.contacts				
+				options = options;	// This is just to get by JSHint
+				defer.resolve();
 			}
-		},
-
-		pickContact: function(onSuccess, onError) {
-			if (this.throwsError) {
-				if (onError) {
-					onError('There was an error');
-				}
-			} else {
-				if (onSuccess) {
-					onSuccess();
-				}
-			}
+			return defer.promise;			
 		}
 	};
-});
+}]);
