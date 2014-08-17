@@ -30,7 +30,7 @@ describe('ngCordovaMocks', function() {
 			rootScope.$digest();
 		});
 
-		it('should throw an error while getting the currentAcceleration.', function(done) {
+		it('should throw an error while getting the current acceleration.', function(done) {
 			motionService.throwsError = true;
 			motionService.getCurrentAcceleration()
 				.then(
