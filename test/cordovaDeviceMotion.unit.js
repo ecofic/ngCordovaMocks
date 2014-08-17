@@ -42,5 +42,21 @@ describe('ngCordovaMocks', function() {
 
 			rootScope.$digest();			
 		});
+
+		it('should track five points over an interval', function(done) {
+			var count = 0;
+			var watch = motionService.watchAcceleration(motionServiceOptions);
+
+			watch.promise.then(
+				function() { console.log('here 1'); },
+				function(err) { console.log('here 2'); },
+				function(result) {
+					console.log(result);
+				}
+			);
+
+			interval.flush(5000);
+			rootScope.$digest();
+		});
 	});
 })
