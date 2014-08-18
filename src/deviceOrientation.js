@@ -64,7 +64,6 @@ ngCordovaMocks.factory('$cordovaDeviceOrientation', ['$interval', '$q', function
 					delay = options.frequency;
 				}				
 
-				console.log('Tmeout: ' + delay);
 				this.watchIntervals.push({
 					watchId: watchId,
 					interval: $interval(
@@ -100,17 +99,17 @@ ngCordovaMocks.factory('$cordovaDeviceOrientation', ['$interval', '$q', function
 				if (this.throwsError) {
 					defer.reject('Unable to clear watch.');
 				} else {
-					var watchRemoved = -1;
+					var removed = -1;
 					for (var i=0; i<this.watchIntervals.length; i++) {
 						if (this.watchIntervals[i].watchId === watchId) {
 							$interval.cancel(watchIntervals[i].interval);
-							watchRemoved = i;
+							removed = i;
 							break;
 						}
 					}
 
-					if (watchRemoved !== -1) {
-						this.watchIntervals.splice(watchRemoved, 1);
+					if (removed !== -1) {
+						this.watchIntervals.splice(removed, 1);
 					}
 				}
 			} else {

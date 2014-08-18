@@ -60,5 +60,22 @@ describe('ngCordovaMocks', function() {
 
 			expect(count).toBe(5);
 		});
+
+		it('should clear a created watch', function() {
+			var watch = motionService.watchAcceleration(motionServiceOptions);
+			watch.promise.then(
+				function() { },
+				function(err) { expect(false).toBe(true); },
+				function(result) {
+					count = count + 1;
+				}
+			);
+
+			interval.flush(6000);
+			motionService.clearWatch(watch.watchId);
+			rootScope.$digest();
+
+			expect(count).toBe(6);
+		});		
 	});
 })

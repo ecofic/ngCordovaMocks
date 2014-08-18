@@ -82,10 +82,29 @@ ngCordovaMocks.factory('$cordovaDeviceMotion', ['$interval', '$q', function ($in
 			};
 		},
 
-		clearWatch : function (watchId) {
+		clearWatch: function (watchId) {
+			var defer = $q.defer();			
 			if (watchId) {
-				$interval.cancel(watchId);
+				if (this.throwsError) {
+					defer.reject('Unable to clear watch.');
+				} else {
+					var removed = -1;
+					for (var i=0; i<this.watchIntervals.length; i++) {
+						if (this.watchIntervals[i].watchId === watchId) {
+							$interval.cancel(watchIntervals[i].interval);
+							removed = i;
+							break;
+						}
+					}
+
+					if (removed !== -1) {
+						this.watchIntervals.splice(removed, 1);
+					}
+				}
+			} else {
+				defer.reject('Unable to clear watch. No watch ID provided.');
 			}
+			return defer.promise;
 		}
 	};
 }]);
