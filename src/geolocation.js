@@ -15,53 +15,56 @@
  * limitations under the License.
 */
 
- /**
+/**
  * @ngdoc service
- * @name cordovaDeviceOrientation
+ * @name cordovaGeolocation
  *
  * @description
- * A service for testing compass fetures 
+ * A service for testing location services
  * in an app build with ngCordova.
  *
  * @example
-   $cordovaDeviceOrientation.getCurrentHeading();
+   $cordovaCamera.getPicture(cameraOptions);
  */ 
-ngCordovaMocks.factory('$cordovaDeviceOrientation', ['$interval', '$q', function ($interval, $q) {
-	var currentHeading = null;
+ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($interval, $q) {
 	var throwsError = false;
-	var readings = [];
-	var watchIntervals = [];	
+	var watchIntervals = [];
+	var locations = [];
+	var currentPosition = null;
 
 	return {
 		// Properties intended to mock test scenarios
-		currentHeading: currentHeading,
 		throwsError: throwsError,
-		readings: readings,
 		watchIntervals: watchIntervals,
+		locations: locations,
+		currentPosition: currentPosition,
 
-		getCurrentHeading: function () {
-			var defer = $q.defer();			
+		getCurrentPosition: function(options) {
+			var defer = $q.defer();
 			if (this.throwsError) {
-				defer.reject('There was an error getting the current heading.');
+				defer.reject('There was an error getting the location.');
 			} else {
-				defer.resolve(this.currentHeading);
+				if (options) {
+					options = options;	// This is just to get by JSHint.
+				}
+				defer.resolve(this.currentPosition);
 			}
 			return defer.promise;
 		},
 
-		watchHeading: function (options) {
+		watchPosition: function(options) {
 			var defer = $q.defer();
 			var watchId = Math.floor((Math.random() * 1000000) + 1);
 
-			this.readings = [];
+			this.locations = [];
 			self = this;
 
 			if (this.throwsError) {
-				defer.reject('There was an error getting the compass heading.');
+				defer.reject('There was an error getting the geolocation.');
 			} else {
-				var delay = 100;		// The default based on https://github.com/apache/cordova-plugin-device-orientation/blob/master/doc/index.md
-				if (options && options.frequency) {
-					delay = options.frequency;
+				var delay = 1000;
+				if (options && options.timeout) {
+					delay = options.timeout;
 				}				
 
 				this.watchIntervals.push({
@@ -69,16 +72,34 @@ ngCordovaMocks.factory('$cordovaDeviceOrientation', ['$interval', '$q', function
 					interval: $interval(
 						function() {
 							if (self.throwsError) {
-								defer.reject('There was an error watching the acceleration.');
+								defer.reject('There was an error watching the geolocation.');
 							}
 
 							// Generate a random position
-							var magneticHeading = (Math.random() * 359.99) + 1;
-							var trueHeading = (Math.random() * 359.99) + 1;
-							var headingAccuracy = Math.floor((Math.random() * 360) + 1);
-							var result = { magneticHeading: magneticHeading, trueHeading: trueHeading, headingAccuracy:headingAccuracy, timestamp:Date.now() };
+							var altitude = ((Math.random() * 100) + 1);
+							var latitude = ((Math.random() * 180) + 1) - 90;
+							var longitude = ((Math.random() * 360) + 1) - 180;
 
-							self.readings.push(result);
+							var accuracy = ((Math.random() * 10) + 1);
+							var altitudeAccuracy = ((Math.random() * 10) + 1);
+							var heading = ((Math.random() * 360) + 1);
+							var speed = ((Math.random() * 100) + 1);
+
+							var result = { 
+								coords: {
+									latitude: latitude,
+									longitude: longitude,
+									altitude: altitude,
+									accuracy: accuracy,
+									altitudeAccuracy: altitudeAccuracy,
+									heading: heading,
+									speed: speed
+								}, 
+								timestamp:Date.now() 
+							};
+
+							self.currentPosition = result;
+							self.locations.push(result);
 							defer.notify(result);	
 						}, 
 						delay
@@ -115,6 +136,6 @@ ngCordovaMocks.factory('$cordovaDeviceOrientation', ['$interval', '$q', function
 				defer.reject('Unable to clear watch. No watch ID provided.');
 			}
 			return defer.promise;
-		}
+		}		
 	};
 }]);
