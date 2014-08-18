@@ -14,7 +14,7 @@
   ],
   "devDependencies": {
     "angularjs": "*",
-    "angular-mocks": "~1.2.1"  
+    "angular-mocks": "~1.2.1"
   },
   "license": "Apache",
   "ignore": [

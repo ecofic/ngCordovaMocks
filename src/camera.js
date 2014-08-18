@@ -15,13 +15,9 @@
  * limitations under the License.
 */
 
-/*
- * A service for testing camera features
- * in an app build with ngCordova.
- */ 
 /**
  * @ngdoc service
- * @name cordovaCamera
+ * @name ngCordovaMocks.cordovaCamera
  *
  * @description
  * A service for testing camera features
@@ -29,7 +25,7 @@
  *
  * @example
    $cordovaCamera.getPicture(cameraOptions);
- */ 
+**/ 
 ngCordovaMocks.factory('$cordovaCamera', ['$q', function($q) {
 	var throwsError = false;
 
@@ -37,6 +33,14 @@ ngCordovaMocks.factory('$cordovaCamera', ['$q', function($q) {
 		// Properties intended to mock test scenarios
 		throwsError: throwsError,
 
+		/**
+		 * @ngdoc method
+		 * @name getPicture
+		 * @methodOf ngCordovaMocks.cordovaCamera
+		 *
+		 * @description
+		 * A mock method used to simulate taking a picture.
+		**/
 		getPicture: function(options) {
 			var defer = $q.defer();
 			if (this.throwsError) {
