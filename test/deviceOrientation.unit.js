@@ -77,7 +77,5 @@ describe('ngCordovaMocks', function() {
 
 			expect(count).toBe(5);
 		});
-
-		// TODO: Test WatchHeading and ClearWatch
 	});
 })
