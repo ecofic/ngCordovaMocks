@@ -15,52 +15,133 @@
  * limitations under the License.
 */
 
-/*
- * A service for testing features related with contacts 
+/**
+ * @ngdoc service
+ * @name ngCordovaMocks.cordovaContacts
+ *
+ * @description
+ * A service for testing features related with contacts
  * in an app build with ngCordova.
- */ 
+**/  
 ngCordovaMocks.factory('$cordovaContacts', ['$q', function($q) {
 	var throwsError = false;
 	var contacts = [];
 
 	return {
-		// Properties intended to mock test scenarios
+        /**
+		 * @ngdoc property
+		 * @name throwsError
+		 * @propertyOf ngCordovaMocks.cordovaContacts
+		 *
+		 * @description
+		 * A flag that signals whether a promise should be
+		 * rejected or not. It is intended for testing purposes only.
+		**/
 		throwsError: throwsError,
+
+        /**
+		 * @ngdoc contacts
+		 * @name throwsError
+		 * @propertyOf ngCordovaMocks.cordovaContacts
+		 *
+		 * @description
+		 * An in-memory collection of contacts.
+		 * This collection is intended for testing purposes only.
+		**/
 		contacts: contacts,
 
+		/**
+		 * @ngdoc method
+		 * @name save
+		 * @methodOf ngCordovaMocks.cordovaContacts
+		 *
+		 * @description
+		 * A mock method used to simulate saving a contact.
+		**/
 		save: function(contact) {
 			var defer = $q.defer();
 			if (this.throwsError) {
 				defer.reject('There was an error saving the contact.');
 			} else {
-				this.contacts.push(contact);
-				defer.resolve();
+				var existingIndex = null;
+				for (var i=0; i<this.contacts.length; i++) {
+					// The actual implementation relies on the entire object match.
+					// we're gong to rely on the ID.
+					if (this.contacts[i].id === contact.id) {
+						existingIndex = i;
+						break;
+					}
+				}
+
+				if (existingIndex === null) {
+					this.contacts.push(contact);
+					defer.resolve();					
+				} else {
+					defer.reject('Contact already exists.');
+				}
 			}
 			return defer.promise;
 		},
 
+		/**
+		 * @ngdoc method
+		 * @name remove
+		 * @methodOf ngCordovaMocks.cordovaContacts
+		 *
+		 * @description
+		 * A mock method used to simulate removing a contact.
+		**/
 		remove: function(contact) {
 			var defer = $q.defer();
 			if (this.throwsError) {
 				defer.reject('There was an error saving the contact.');
 			} else {
-				// TODO: Once the structure of the contact object is better
-				// understood, it needs to be removed from this.contacts
-				contact = contact;	// This is just to get by JSHint.
-				defer.resolve();
+				var toRemove = null;
+				for (var i=0; i<this.contacts.length; i++) {
+					// The actual implementation relies on the entire object match.
+					// we're gong to rely on the ID.
+					if (this.contacts[i].id === contact.id) {
+						toRemove = i;
+						break;
+					}
+				}
+
+				if (toRemove === null) {
+					defer.reject('Unable to find contact.');
+				} else {
+					this.contacts.splice(toRemove, 1);
+					defer.resolve();
+				}
 			}
 			return defer.promise;
 		},
 
+		/**
+		 * @ngdoc method
+		 * @name find
+		 * @methodOf ngCordovaMocks.cordovaContacts
+		 *
+		 * @description
+		 * A mock method used to simulate finding a contact.
+		**/
 		find: function(options) {
 			var defer = $q.defer();
 			if (this.throwsError) {
 				defer.reject('There was an error finding the contact.');
 			} else {
-				// TODO: Once the structure of a contact object is better
-				// understood, we need to return matching entities from this.contacts				
-				options = options;	// This is just to get by JSHint
-				defer.resolve();
+				var fields = options.fields || ['id', 'displayName'];
+				delete options.fields;				
+
+				if (!fields) {
+					defer.reject('ContactError.INVALID_ARGUMENT_ERROR');
+				} else {
+					if (fields === '*') {
+						defer.resolve(this.contacts);
+					} else {
+						// TODO: Search by individual fields
+						defer.resolve();
+					}
+				}
 			}
 			return defer.promise;			
 		}
