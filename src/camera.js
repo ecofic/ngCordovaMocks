@@ -22,15 +22,20 @@
  * @description
  * A service for testing camera features
  * in an app build with ngCordova.
- *
- * @example
-   $cordovaCamera.getPicture(cameraOptions);
 **/ 
 ngCordovaMocks.factory('$cordovaCamera', ['$q', function($q) {
 	var throwsError = false;
 
 	return {
-		// Properties intended to mock test scenarios
+        /**
+		 * @ngdoc property
+		 * @name throwsError
+		 * @propertyOf ngCordovaMocks.cordovaCamera
+		 *
+		 * @description
+		 * A flag that signals whether a promise should be
+		 * rejected or not. It is intended for testing purposes only.
+		**/		
 		throwsError: throwsError,
 
 		/**
