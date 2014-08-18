@@ -4,10 +4,11 @@ describe('ngCordovaMocks', function() {
 	});
 
 	describe('cordovaDeviceOrientation', function () {
-		var interval = null;		
+		var count = 0;
+		var interval = null;
 		var rootScope = null;
 		var orientationService = null;
-		var orientationServiceOptions = { period: 1000 };
+		var orientationServiceOptions = { frequency: 1000 };
 
 		beforeEach(inject(function ($cordovaDeviceOrientation, $interval, $rootScope) {
 			orientationService = $cordovaDeviceOrientation;
@@ -41,6 +42,39 @@ describe('ngCordovaMocks', function() {
 			;
 
 			rootScope.$digest();			
+		});
+
+		it('should track five readings over an interval', function() {
+			var watch = orientationService.watchHeading(orientationServiceOptions);
+			watch.promise.then(
+				function() { },
+				function(err) { expect(false).toBe(true); },
+				function(result) {
+					count = count + 1;
+				}
+			);
+
+			interval.flush(5000);
+			rootScope.$digest();
+
+			expect(count).toBe(5);
+		});
+
+		it('should clear a created watch', function() {
+			var watch = orientationService.watchHeading(orientationServiceOptions);
+			watch.promise.then(
+				function() { },
+				function(err) { expect(false).toBe(true); },
+				function(result) {
+					count = count + 1;
+				}
+			);
+
+			interval.flush(5000);
+			orientationService.clearWatch(watch.watchId);
+			rootScope.$digest();
+
+			expect(count).toBe(5);
 		});
 
 		// TODO: Test WatchHeading and ClearWatch

@@ -44,11 +44,11 @@ ngCordovaMocks.factory('$cordovaDeviceMotion', ['$interval', '$q', function ($in
 
 		watchAcceleration : function (options) {
 			var defer = $q.defer();
-			self = this;
-
 			var watchId = Math.floor((Math.random() * 1000000) + 1);
-			this.positions = [];
 
+			this.positions = [];
+			self = this;
+			
 			if (this.throwsError) {
 				defer.reject('There was an error watching the current acceleration.');
 			} else {
