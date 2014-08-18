@@ -19,6 +19,17 @@
  * A service for testing camera features
  * in an app build with ngCordova.
  */ 
+/**
+ * @ngdoc service
+ * @name cordovaCamera
+ *
+ * @description
+ * A service for testing camera features
+ * in an app build with ngCordova.
+ *
+ * @example
+   $cordovaCamera.getPicture(cameraOptions);
+ */ 
 ngCordovaMocks.factory('$cordovaCamera', ['$q', function($q) {
 	var throwsError = false;
 

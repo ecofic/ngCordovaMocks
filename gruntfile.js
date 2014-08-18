@@ -37,6 +37,22 @@ module.exports = function (grunt) {
             },
         },
 
+        ngdocs: {
+            options: {
+                dest: 'dist/docs',
+                scripts: ['../app.min.js'],
+                html5Mode: true,
+                startPage: '/api',
+                title: "ngCordovaMocks Docs",
+                titleLink: "/api",
+                bestMatch: true
+            },
+            api: {
+                src: ['src/**/*.js', '!src/**/*.spec.js'],
+                title: 'ngCordovaMocks Docs'
+            }
+        },
+
         jshint: {
             options: {
                 jshintrc: '.jshintrc',
@@ -55,7 +71,7 @@ module.exports = function (grunt) {
 
         jasmine: {
             mocks: {
-                src: 'dist/ngCordovaMocks.min.js',
+                src: 'dist/ngCordovaMocks.js',
                 options: {
                     specs: 'test/*.js',
                     vendor: [
@@ -122,7 +138,7 @@ module.exports = function (grunt) {
     // Setup the "test" task
     grunt.registerTask('test', ['clean:mocks', 'replace:mocks', 
         'concat:mocks', 'clean:temp', 'usebanner:module', 
-        'uglify:mocks', 'usebanner:mocks', 'jasmine:mocks']);
+        'uglify:mocks', 'usebanner:mocks', 'jasmine:mocks', 'ngdocs:api']);
 
     // By default, lint and run all tests.
     grunt.registerTask('default', ['jshint:mocks', 'test']);    
