@@ -44,6 +44,8 @@ ngCordovaMocks.factory('$cordovaDeviceMotion', ['$interval', '$q', function ($in
 
 		watchAcceleration : function (options) {
 			var defer = $q.defer();
+			self = this;
+
 			var watchId = Math.floor((Math.random() * 1000000) + 1);
 			this.positions = [];
 
@@ -57,7 +59,7 @@ ngCordovaMocks.factory('$cordovaDeviceMotion', ['$interval', '$q', function ($in
 
 				this.watchIntervals.push($interval(
 					function() {
-						if (this.throwsError) {
+						if (self.throwsError) {
 							defer.reject('There was an error watching the acceleration.');
 						}
 
@@ -67,14 +69,11 @@ ngCordovaMocks.factory('$cordovaDeviceMotion', ['$interval', '$q', function ($in
 						var randomZ = Math.floor((Math.random() * 100) + 1);
 						var result = { x: randomX, y: randomY, z:randomZ, timestamp:Date.now() };
 
-						console.log('logged position.');
-						positions.push(result);
+						self.positions.push(result);
 						defer.notify(result);	
 					}, 
 					delay
 				));
-
-				defer.resolve(this.currentAcceleration);
 			}
 
 			return {

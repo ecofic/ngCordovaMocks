@@ -29,6 +29,7 @@
 
   "globals": {
     "cordova" : true,
-    "ngCordovaMocks" : true
+    "ngCordovaMocks" : true,
+    "self" : true
   }
 }

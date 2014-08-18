@@ -4,10 +4,11 @@ describe('ngCordovaMocks', function() {
 	});
 
 	describe('cordovaDeviceMotion', function () {
+		var count = 0;
 		var interval = null;		
 		var rootScope = null;
 		var motionService = null;
-		var motionServiceOptions = { period: 1000 };
+		var motionServiceOptions = { frequency: 1000 };
 
 		beforeEach(inject(function ($cordovaDeviceMotion, $interval, $rootScope) {
 			motionService = $cordovaDeviceMotion;
@@ -43,20 +44,20 @@ describe('ngCordovaMocks', function() {
 			rootScope.$digest();			
 		});
 
-		it('should track five points over an interval', function(done) {
-			var count = 0;
+		it('should track five points over an interval', function() {
 			var watch = motionService.watchAcceleration(motionServiceOptions);
-
 			watch.promise.then(
-				function() { console.log('here 1'); },
-				function(err) { console.log('here 2'); },
+				function() { },
+				function(err) { expect(false).toBe(true); },
 				function(result) {
-					console.log(result);
+					count = count + 1;
 				}
 			);
 
 			interval.flush(5000);
 			rootScope.$digest();
+
+			expect(count).toBe(5);
 		});
 	});
 })
