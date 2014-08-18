@@ -64,6 +64,7 @@ ngCordovaMocks.factory('$cordovaDeviceOrientation', ['$interval', '$q', function
 					delay = options.frequency;
 				}				
 
+				console.log('Tmeout: ' + delay);
 				this.watchIntervals.push({
 					watchId: watchId,
 					interval: $interval(

@@ -14,6 +14,7 @@ describe('ngCordovaMocks', function() {
 			motionService = $cordovaDeviceMotion;
 			rootScope = $rootScope;
 			interval = $interval;
+			count = 0;
 		}));
 
 		it('should get the current acceleration', function (done) {

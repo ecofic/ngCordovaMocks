@@ -14,6 +14,7 @@ describe('ngCordovaMocks', function() {
 			orientationService = $cordovaDeviceOrientation;
 			rootScope = $rootScope;
 			interval = $interval;
+			count = 0;
 		}));
 
 		it('should get the current heading', function (done) {
