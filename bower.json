@@ -6,6 +6,7 @@
     "Chad Campbell <chad.campbell@ecofic.com>"
   ],
   "description": "A mock library for ngCordova.",
+  "main": "./dist/ngCordovaMocks.js",
   "keywords": [
     "angular",
     "angularjs",  
