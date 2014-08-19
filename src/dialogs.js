@@ -17,14 +17,11 @@
 
 /**
  * @ngdoc service
- * @name cordovaDialogs
+ * @name ngCordovaMocks.cordovaDialogs
  *
  * @description
  * A service for testing dialogs
  * in an app build with ngCordova.
- *
- * @example
-   $cordovaDialogs.alert('Hello. World.');
  */ 
 ngCordovaMocks.factory('$cordovaDialogs', function() {
 	var dialogText = false;
@@ -34,11 +31,61 @@ ngCordovaMocks.factory('$cordovaDialogs', function() {
 	var beepCount = 0;
 
 	return {
+        /**
+		 * @ngdoc property
+		 * @name dialogText
+		 * @propertyOf ngCordovaMocks.cordovaDialogs
+		 *
+		 * @description
+		 * The main content in the dialog.
+		 * This property should only be used in automated tests.
+		**/		
 		dialogText: dialogText,
+
+        /**
+		 * @ngdoc property
+		 * @name dialogTitle
+		 * @propertyOf ngCordovaMocks.cordovaDialogs
+		 *
+		 * @description
+		 * The title of the dialog.
+		 * This property should only be used in automated tests.
+		**/		
 		dialogTitle: dialogTitle,
+
+        /**
+		 * @ngdoc property
+		 * @name defaultValue
+		 * @propertyOf ngCordovaMocks.cordovaDialogs
+		 *
+		 * @description
+		 * The default value to be used in a prompt.
+		 * This property should only be used in automated tests.
+		**/				
 		defaultValue: defaultValue,
+
 		promptResponse: promptResponse,
+
+        /**
+		 * @ngdoc property
+		 * @name buttonLabels
+		 * @propertyOf ngCordovaMocks.cordovaDialogs
+		 *
+		 * @description
+		 * An array of the text of each button in the dialog.
+		 * This property should only be used in automated tests.
+		**/		
 		buttonLabels: [],
+
+        /**
+		 * @ngdoc property
+		 * @name beepCount
+		 * @propertyOf ngCordovaMocks.cordovaDialogs
+		 *
+		 * @description
+		 * The number of times a beep has occurred.
+		 * This property should only be used in automated tests.
+		**/		
 		beepCount: beepCount,
 
 		alert: function(message, callback, title, buttonName) {
