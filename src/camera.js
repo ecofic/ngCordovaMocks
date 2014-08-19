@@ -38,14 +38,6 @@ ngCordovaMocks.factory('$cordovaCamera', ['$q', function($q) {
 		**/		
 		throwsError: throwsError,
 
-		/**
-		 * @ngdoc method
-		 * @name getPicture
-		 * @methodOf ngCordovaMocks.cordovaCamera
-		 *
-		 * @description
-		 * A mock method used to simulate taking a picture.
-		**/
 		getPicture: function(options) {
 			var defer = $q.defer();
 			if (this.throwsError) {
