@@ -37,8 +37,8 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 		 * @propertyOf ngCordovaMocks.cordovaGeolocation
 		 *
 		 * @description
-		 * A flag that signals whether a promise should be
-		 * rejected or not. It is intended for testing purposes only.
+		 * A flag that signals whether a promise should be rejected or not. 
+		 * This property should only be used in automated tests.
 		**/
 		throwsError: throwsError,
 
@@ -49,7 +49,7 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 		 *
 		 * @description
 		 * The collection of watchers that are currently active.
-		 * It is intended for testing purposes only.
+		 * This property should only be used in automated tests.
 		**/		
 		watchIntervals: watchIntervals,
 
@@ -60,7 +60,7 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 		 *
 		 * @description
 		 * The collection of 'locations' that have been logged.
-		 * It is intended for testing purposes only.
+		 * This property should only be used in automated tests.
 		**/				
 		locations: locations,
 
@@ -71,7 +71,7 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 		 *
 		 * @description
 		 * The last location logged.
-		 * It is intended for testing purposes only.
+		 * This property should only be used in automated tests.
 		**/						
 		currentPosition: currentPosition,
 
@@ -83,7 +83,7 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 		 * @description
 		 * The position to be logged the next time that a watcher
 		 * gets the location.
-		 * It is intended for testing purposes only.
+		 * This property should only be used in automated tests.
 		**/						
 		nextPosition: nextPosition,
 
