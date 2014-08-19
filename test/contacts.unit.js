@@ -114,18 +114,30 @@ describe('ngCordovaMocks', function() {
 							)
 							.finally(function() { done(); }) 
 						;
-
 					},
 					function() { expect(false).toBe(true); }
 				)
 				.finally(function() { done(); })
 			;
 
-			$rootScope.$digest();			
+			$rootScope.$digest();
 		});
 
 		it('should fail to remove a contact if it does not exist', function(done) {
+			// The unique identifier of the contact we'll try to remove
+			var contactId = '10000003';
+			var contact = createContact(contactId, 'John', 'Doe', 'John');
 
+			// Attempt to remove the contact
+			$cordovaContacts.remove(contact)
+				.then(
+					function() { expect(false).toBe(true); },
+					function() { expect(true).toBe(true); }
+				)
+				.finally(function() { done(); }) 
+			;
+
+			$rootScope.$digest();
 		});
 
 		it('should find an existing contact', function(done) {

@@ -17,14 +17,12 @@
 
  /**
  * @ngdoc service
- * @name cordovaDeviceOrientation
+ * @name ngCordovaMocks.cordovaDeviceOrientation
  *
  * @description
  * A service for testing compass fetures 
  * in an app build with ngCordova.
  *
- * @example
-   $cordovaDeviceOrientation.getCurrentHeading();
  */ 
 ngCordovaMocks.factory('$cordovaDeviceOrientation', ['$interval', '$q', function ($interval, $q) {
 	var currentHeading = null;

@@ -5,23 +5,23 @@ describe('ngCordovaMocks', function() {
 
 	describe('cordovaDeviceMotion', function () {
 		var count = 0;
-		var interval = null;		
-		var rootScope = null;
-		var motionService = null;
+		var $interval = null;		
+		var $rootScope = null;
+		var $cordovaDeviceMotion = null;
 		var motionServiceOptions = { frequency: 1000 };
 
-		beforeEach(inject(function ($cordovaDeviceMotion, $interval, $rootScope) {
-			motionService = $cordovaDeviceMotion;
-			rootScope = $rootScope;
-			interval = $interval;
+		beforeEach(inject(function (_$interval_, _$rootScope_, _$cordovaDeviceMotion_) {
+			$cordovaDeviceMotion = _$cordovaDeviceMotion_;
+			$rootScope = _$rootScope_;
+			$interval = _$interval_;
 			count = 0;
 		}));
 
 		it('should get the current acceleration', function (done) {
 			var expected = { x:1, y:1, z:1, timestamp:Date() };
-			motionService.currentAcceleration = expected;
+			$cordovaDeviceMotion.currentAcceleration = expected;
 
-			motionService.getCurrentAcceleration()
+			$cordovaDeviceMotion.getCurrentAcceleration()
 				.then(
 					function(actual) { expect(actual).toBe(expected); },
 					function() { expect(false).toBe(true); }
@@ -29,12 +29,12 @@ describe('ngCordovaMocks', function() {
 				.finally(function() { done(); })
 			;
 
-			rootScope.$digest();
+			$rootScope.$digest();
 		});
 
 		it('should throw an error while getting the current acceleration.', function(done) {
-			motionService.throwsError = true;
-			motionService.getCurrentAcceleration()
+			$cordovaDeviceMotion.throwsError = true;
+			$cordovaDeviceMotion.getCurrentAcceleration()
 				.then(
 					function(actual) { expect(false).toBe(true); },
 					function() { expect(true).toBe(true); }
@@ -42,11 +42,11 @@ describe('ngCordovaMocks', function() {
 				.finally(function() { done(); })
 			;
 
-			rootScope.$digest();			
+			$rootScope.$digest();			
 		});
 
 		it('should track five points over an interval', function() {
-			var watch = motionService.watchAcceleration(motionServiceOptions);
+			var watch = $cordovaDeviceMotion.watchAcceleration(motionServiceOptions);
 			watch.promise.then(
 				function() { },
 				function(err) { expect(false).toBe(true); },
@@ -55,14 +55,14 @@ describe('ngCordovaMocks', function() {
 				}
 			);
 
-			interval.flush(5000);
-			rootScope.$digest();
+			$interval.flush(5000);
+			$rootScope.$digest();
 
 			expect(count).toBe(5);
 		});
 
 		it('should clear a created watch', function() {
-			var watch = motionService.watchAcceleration(motionServiceOptions);
+			var watch = $cordovaDeviceMotion.watchAcceleration(motionServiceOptions);
 			watch.promise.then(
 				function() { },
 				function(err) { expect(false).toBe(true); },
@@ -71,9 +71,9 @@ describe('ngCordovaMocks', function() {
 				}
 			);
 
-			interval.flush(6000);
-			motionService.clearWatch(watch.watchId);
-			rootScope.$digest();
+			$interval.flush(6000);
+			$cordovaDeviceMotion.clearWatch(watch.watchId);
+			$rootScope.$digest();
 
 			expect(count).toBe(6);
 		});		

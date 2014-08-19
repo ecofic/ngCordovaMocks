@@ -5,23 +5,23 @@ describe('ngCordovaMocks', function() {
 
 	describe('cordovaDeviceOrientation', function () {
 		var count = 0;
-		var interval = null;
-		var rootScope = null;
-		var orientationService = null;
+		var $interval = null;
+		var $rootScope = null;
+		var $cordovaDeviceOrientation = null;
 		var orientationServiceOptions = { frequency: 1000 };
 
-		beforeEach(inject(function ($cordovaDeviceOrientation, $interval, $rootScope) {
-			orientationService = $cordovaDeviceOrientation;
-			rootScope = $rootScope;
-			interval = $interval;
+		beforeEach(inject(function (_$interval_, _$rootScope_, _$cordovaDeviceOrientation_) {
+			$cordovaDeviceOrientation = _$cordovaDeviceOrientation_;
+			$rootScope = _$rootScope_;
+			$interval = _$interval_;
 			count = 0;
 		}));
 
 		it('should get the current heading', function (done) {
 			var expected = { x:1, y:1, z:1, timestamp:Date() };
-			orientationService.currentHeading = expected;
+			$cordovaDeviceOrientation.currentHeading = expected;
 
-			orientationService.getCurrentHeading()
+			$cordovaDeviceOrientation.getCurrentHeading()
 				.then(
 					function(actual) { expect(actual).toBe(expected); },
 					function() { expect(false).toBe(true); }
@@ -29,12 +29,12 @@ describe('ngCordovaMocks', function() {
 				.finally(function() { done(); })
 			;
 
-			rootScope.$digest();
+			$rootScope.$digest();
 		});
 
 		it('should throw an error while getting the current heading.', function(done) {
-			orientationService.throwsError = true;
-			orientationService.getCurrentHeading()
+			$cordovaDeviceOrientation.throwsError = true;
+			$cordovaDeviceOrientation.getCurrentHeading()
 				.then(
 					function(actual) { expect(false).toBe(true); },
 					function() { expect(true).toBe(true); }
@@ -42,11 +42,11 @@ describe('ngCordovaMocks', function() {
 				.finally(function() { done(); })
 			;
 
-			rootScope.$digest();			
+			$rootScope.$digest();			
 		});
 
 		it('should track five readings over an interval', function() {
-			var watch = orientationService.watchHeading(orientationServiceOptions);
+			var watch = $cordovaDeviceOrientation.watchHeading(orientationServiceOptions);
 			watch.promise.then(
 				function() { },
 				function(err) { expect(false).toBe(true); },
@@ -55,14 +55,14 @@ describe('ngCordovaMocks', function() {
 				}
 			);
 
-			interval.flush(5000);
-			rootScope.$digest();
+			$interval.flush(5000);
+			$rootScope.$digest();
 
 			expect(count).toBe(5);
 		});
 
 		it('should clear a created watch', function() {
-			var watch = orientationService.watchHeading(orientationServiceOptions);
+			var watch = $cordovaDeviceOrientation.watchHeading(orientationServiceOptions);
 			watch.promise.then(
 				function() { },
 				function(err) { expect(false).toBe(true); },
@@ -71,9 +71,9 @@ describe('ngCordovaMocks', function() {
 				}
 			);
 
-			interval.flush(5000);
-			orientationService.clearWatch(watch.watchId);
-			rootScope.$digest();
+			$interval.flush(5000);
+			$cordovaDeviceOrientation.clearWatch(watch.watchId);
+			$rootScope.$digest();
 
 			expect(count).toBe(5);
 		});
