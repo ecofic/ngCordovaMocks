@@ -33,8 +33,8 @@ ngCordovaMocks.factory('$cordovaCamera', ['$q', function($q) {
 		 * @propertyOf ngCordovaMocks.cordovaCamera
 		 *
 		 * @description
-		 * A flag that signals whether a promise should be
-		 * rejected or not. It is intended for testing purposes only.
+		 * A flag that signals whether a promise should be rejected or not. 
+		 * This property should only be used in automated tests.
 		**/		
 		throwsError: throwsError,
 

@@ -34,8 +34,8 @@ ngCordovaMocks.factory('$cordovaContacts', ['$q', function($q) {
 		 * @propertyOf ngCordovaMocks.cordovaContacts
 		 *
 		 * @description
-		 * A flag that signals whether a promise should be
-		 * rejected or not. It is intended for testing purposes only.
+		 * A flag that signals whether a promise should be rejected or not.
+		 * This property should only be used in automated tests.
 		**/
 		throwsError: throwsError,
 
@@ -46,18 +46,10 @@ ngCordovaMocks.factory('$cordovaContacts', ['$q', function($q) {
 		 *
 		 * @description
 		 * An in-memory collection of contacts.
-		 * This collection is intended for testing purposes only.
+		 * This property should only be used in automated tests.
 		**/
 		contacts: contacts,
 
-		/**
-		 * @ngdoc method
-		 * @name save
-		 * @methodOf ngCordovaMocks.cordovaContacts
-		 *
-		 * @description
-		 * A mock method used to simulate saving a contact.
-		**/
 		save: function(contact) {
 			var defer = $q.defer();
 			if (this.throwsError) {
@@ -83,14 +75,6 @@ ngCordovaMocks.factory('$cordovaContacts', ['$q', function($q) {
 			return defer.promise;
 		},
 
-		/**
-		 * @ngdoc method
-		 * @name remove
-		 * @methodOf ngCordovaMocks.cordovaContacts
-		 *
-		 * @description
-		 * A mock method used to simulate removing a contact.
-		**/
 		remove: function(contact) {
 			var defer = $q.defer();
 			if (this.throwsError) {
@@ -116,14 +100,6 @@ ngCordovaMocks.factory('$cordovaContacts', ['$q', function($q) {
 			return defer.promise;
 		},
 
-		/**
-		 * @ngdoc method
-		 * @name find
-		 * @methodOf ngCordovaMocks.cordovaContacts
-		 *
-		 * @description
-		 * A mock method used to simulate finding a contact.
-		**/
 		find: function(options) {
 			var defer = $q.defer();
 			if (this.throwsError) {
@@ -138,8 +114,17 @@ ngCordovaMocks.factory('$cordovaContacts', ['$q', function($q) {
 					if (fields === '*') {
 						defer.resolve(this.contacts);
 					} else {
+						// Implement a very rudimentary search approach for testing purposes.
+						// This is NOT exhaustive.
+						var results = [];
+						for (var i=0; i<this.contacts.length; i++) {
+							for(var key in this.contacts[i]) {
+								var propertyValue = this.contacts[i][key];
+								console.log(propertyValue);
+							}
+						}
 						// TODO: Search by individual fields
-						defer.resolve();
+						defer.resolve(results);
 					}
 				}
 			}
