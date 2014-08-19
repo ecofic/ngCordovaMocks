@@ -23,7 +23,6 @@
  * A service for testing device information
  * in an app build with ngCordova.
 **/  
-
 ngCordovaMocks.factory('$cordovaDevice', function () {
 	var device = '';
 	var cordova = '';

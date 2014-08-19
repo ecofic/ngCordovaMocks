@@ -15,10 +15,14 @@
  * limitations under the License.
 */
 
-/*
- * A service for mocking the accelerometer 
+/**
+ * @ngdoc service
+ * @name ngCordovaMocks.cordovaDeviceMotion
+ *
+ * @description
+ * A service for mocking the accelerometer
  * in an app build with ngCordova.
- */ 
+**/  
 ngCordovaMocks.factory('$cordovaDeviceMotion', ['$interval', '$q', function ($interval, $q) {
 	var currentAcceleration = null;
 	var throwsError = false;
@@ -26,10 +30,48 @@ ngCordovaMocks.factory('$cordovaDeviceMotion', ['$interval', '$q', function ($in
 	var watchIntervals = [];
 
 	return {
-		// Properties intended to mock test scenarios
+		/**
+		 * @ngdoc property
+		 * @name currentAcceleration
+		 * @propertyOf ngCordovaMocks.cordovaDeviceMotion
+		 *
+		 * @description
+		 * The current acceleration. 
+		 * This property should only be used in automated tests.
+		**/				
 		currentAcceleration: currentAcceleration,
+
+        /**
+		 * @ngdoc property
+		 * @name throwsError
+		 * @propertyOf ngCordovaMocks.cordovaDeviceMotion
+		 *
+		 * @description
+		 * A flag that signals whether a promise should be rejected or not.
+		 * This property should only be used in automated tests.
+		**/
 		throwsError: throwsError,
+
+        /**
+		 * @ngdoc property
+		 * @name positions
+		 * @propertyOf ngCordovaMocks.cordovaDeviceMotion
+		 *
+		 * @description
+		 * The collection of 'positions' that have been logged.
+		 * This property should only be used in automated tests.
+		**/		
 		positions: positions,
+
+        /**
+		 * @ngdoc property
+		 * @name watchIntervals
+		 * @propertyOf ngCordovaMocks.cordovaDeviceMotion
+		 *
+		 * @description
+		 * The collection of watchers that are currently active.
+		 * This property should only be used in automated tests.
+		**/		
 		watchIntervals: watchIntervals,
 
 		getCurrentAcceleration: function () {

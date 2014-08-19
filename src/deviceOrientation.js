@@ -22,7 +22,6 @@
  * @description
  * A service for testing compass fetures 
  * in an app build with ngCordova.
- *
  */ 
 ngCordovaMocks.factory('$cordovaDeviceOrientation', ['$interval', '$q', function ($interval, $q) {
 	var currentHeading = null;
@@ -31,10 +30,48 @@ ngCordovaMocks.factory('$cordovaDeviceOrientation', ['$interval', '$q', function
 	var watchIntervals = [];	
 
 	return {
-		// Properties intended to mock test scenarios
+		/**
+		 * @ngdoc property
+		 * @name currentHeading
+		 * @propertyOf ngCordovaMocks.cordovaDeviceOrientation
+		 *
+		 * @description
+		 * The current heading. 
+		 * This property should only be used in automated tests.
+		**/				
 		currentHeading: currentHeading,
+
+        /**
+		 * @ngdoc property
+		 * @name throwsError
+		 * @propertyOf ngCordovaMocks.cordovaDeviceOrientation
+		 *
+		 * @description
+		 * A flag that signals whether a promise should be rejected or not.
+		 * This property should only be used in automated tests.
+		**/
 		throwsError: throwsError,
+
+        /**
+		 * @ngdoc property
+		 * @name positions
+		 * @propertyOf ngCordovaMocks.cordovaDeviceOrientation
+		 *
+		 * @description
+		 * The collection of compass 'readings' that have been logged.
+		 * This property should only be used in automated tests.
+		**/				
 		readings: readings,
+
+        /**
+		 * @ngdoc property
+		 * @name watchIntervals
+		 * @propertyOf ngCordovaMocks.cordovaDeviceOrientation
+		 *
+		 * @description
+		 * The collection of watchers that are currently active.
+		 * This property should only be used in automated tests.
+		**/		
 		watchIntervals: watchIntervals,
 
 		getCurrentHeading: function () {
