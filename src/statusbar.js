@@ -22,8 +22,6 @@
  * @description
  * A service for testing the status bar
  * in an app build with ngCordova.
- *
- * @example
  */ 
 ngCordovaMocks.factory('$cordovaStatusbar', function() {
 	var isStatusBarVisible = true;
@@ -37,7 +35,7 @@ ngCordovaMocks.factory('$cordovaStatusbar', function() {
 		 *
 		 * @description
 		 * A flag that signals whether the status bar is visible or not.
-		 * It is intended for testing purposes only.
+		 * This property should only be used in automated tests.
 		**/		
 		isStatusBarVisible: isStatusBarVisible,
 
@@ -48,7 +46,7 @@ ngCordovaMocks.factory('$cordovaStatusbar', function() {
 		 *
 		 * @description
 		 * A flag that signals whether the status bar can overlay the web view.
-		 * It is intended for testing purposes only.
+		 * This property should only be used in automated tests.
 		**/			
 		canOverlayWebView: canOverlayWebView,
 
