@@ -26,15 +26,30 @@
  * @example
  */ 
 ngCordovaMocks.factory('$cordovaSplashscreen', function() {
+	var isVisible = false;
+
 	return {
+		/**
+		 * @ngdoc property
+		 * @name isVisible
+		 * @propertyOf ngCordovaMocks.cordovaSplashscreen
+		 *
+		 * @description
+		 * A flag that signals whether the splash screen is visible or not.
+		 * It is intended for testing purposes only.
+		**/		
+		isVisible: isVisible,
+
 		hide: function() {
 			// do nothing. everything happens behind the scenes in this case.
 			// its a stub that is present for completeness.
+			this.isVisible = false;
 			return true;
 		},
 		show: function() {
 			// do nothing. everything happens behind the scenes in this case.
 			// its a stub that is present for completeness.
+			this.isVisible = true;
 			return true;
 		}
 	};
