@@ -17,27 +17,75 @@
 
 /**
  * @ngdoc service
- * @name cordovaGeolocation
+ * @name ngCordovaMocks.cordovaGeolocation
  *
  * @description
  * A service for testing location services
  * in an app build with ngCordova.
- *
- * @example
-   $cordovaCamera.getPicture(cameraOptions);
  */ 
 ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($interval, $q) {
 	var throwsError = false;
 	var watchIntervals = [];
 	var locations = [];
 	var currentPosition = null;
+	var nextPosition = null;
 
 	return {
-		// Properties intended to mock test scenarios
+        /**
+		 * @ngdoc property
+		 * @name throwsError
+		 * @propertyOf ngCordovaMocks.cordovaGeolocation
+		 *
+		 * @description
+		 * A flag that signals whether a promise should be
+		 * rejected or not. It is intended for testing purposes only.
+		**/
 		throwsError: throwsError,
+
+        /**
+		 * @ngdoc property
+		 * @name watchIntervals
+		 * @propertyOf ngCordovaMocks.cordovaGeolocation
+		 *
+		 * @description
+		 * The collection of watchers that are currently active.
+		 * It is intended for testing purposes only.
+		**/		
 		watchIntervals: watchIntervals,
+
+        /**
+		 * @ngdoc property
+		 * @name locations
+		 * @propertyOf ngCordovaMocks.cordovaGeolocation
+		 *
+		 * @description
+		 * The collection of 'locations' that have been logged.
+		 * It is intended for testing purposes only.
+		**/				
 		locations: locations,
+
+        /**
+		 * @ngdoc property
+		 * @name currentPosition
+		 * @propertyOf ngCordovaMocks.cordovaGeolocation
+		 *
+		 * @description
+		 * The last location logged.
+		 * It is intended for testing purposes only.
+		**/						
 		currentPosition: currentPosition,
+
+        /**
+		 * @ngdoc property
+		 * @name nextPosition
+		 * @propertyOf ngCordovaMocks.cordovaGeolocation
+		 *
+		 * @description
+		 * The position to be logged the next time that a watcher
+		 * gets the location.
+		 * It is intended for testing purposes only.
+		**/						
+		nextPosition: nextPosition,
 
 		getCurrentPosition: function(options) {
 			var defer = $q.defer();
@@ -75,28 +123,33 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 								defer.reject('There was an error watching the geolocation.');
 							}
 
-							// Generate a random position
-							var altitude = ((Math.random() * 100) + 1);
-							var latitude = ((Math.random() * 180) + 1) - 90;
-							var longitude = ((Math.random() * 360) + 1) - 180;
+							// Attempt to use nextPosition. If one isn't set,
+							// generate a random location for testing purposes.
+							var result = self.nextPosition;
+							if (result === null) {
+								// Generate a random position
+								var altitude = ((Math.random() * 100) + 1);
+								var latitude = ((Math.random() * 180) + 1) - 90;
+								var longitude = ((Math.random() * 360) + 1) - 180;
 
-							var accuracy = ((Math.random() * 10) + 1);
-							var altitudeAccuracy = ((Math.random() * 10) + 1);
-							var heading = ((Math.random() * 360) + 1);
-							var speed = ((Math.random() * 100) + 1);
+								var accuracy = ((Math.random() * 10) + 1);
+								var altitudeAccuracy = ((Math.random() * 10) + 1);
+								var heading = ((Math.random() * 360) + 1);
+								var speed = ((Math.random() * 100) + 1);
 
-							var result = { 
-								coords: {
-									latitude: latitude,
-									longitude: longitude,
-									altitude: altitude,
-									accuracy: accuracy,
-									altitudeAccuracy: altitudeAccuracy,
-									heading: heading,
-									speed: speed
-								}, 
-								timestamp:Date.now() 
-							};
+								result = { 
+									coords: {
+										latitude: latitude,
+										longitude: longitude,
+										altitude: altitude,
+										accuracy: accuracy,
+										altitudeAccuracy: altitudeAccuracy,
+										heading: heading,
+										speed: speed
+									}, 
+									timestamp:Date.now() 
+								};
+							}
 
 							self.currentPosition = result;
 							self.locations.push(result);

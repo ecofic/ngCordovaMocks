@@ -17,7 +17,7 @@
 
 /**
  * @ngdoc service
- * @name cordovaSplashscreen
+ * @name ngCordovaMocks.cordovaSplashscreen
  *
  * @description
  * A service for testing the splash screen

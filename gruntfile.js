@@ -48,7 +48,10 @@ module.exports = function (grunt) {
                 bestMatch: true
             },
             api: {
-                src: ['src/**/*.js', '!src/**/*.spec.js'],
+                src: [
+                    'src/**/*.js', 
+                    '!src/**/*.spec.js'
+                ],
                 title: 'ngCordovaMocks Docs'
             }
         },

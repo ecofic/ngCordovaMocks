@@ -17,7 +17,7 @@
 
 /**
  * @ngdoc service
- * @name cordovaStatusBar
+ * @name ngCordovaMocks.cordovaStatusbar
  *
  * @description
  * A service for testing the status bar
@@ -33,7 +33,7 @@ ngCordovaMocks.factory('$cordovaStatusbar', function() {
 		/**
 		 * @ngdoc property
 		 * @name isStatusBarVisible
-		 * @propertyOf ngCordovaMocks.isStatusBarVisible
+		 * @propertyOf ngCordovaMocks.cordovaStatusbar
 		 *
 		 * @description
 		 * A flag that signals whether the status bar is visible or not.
