@@ -35,7 +35,7 @@ ngCordovaMocks.factory('$cordovaVibration', ['$timeout', function($timeout) {
 		 *
 		 * @description
 		 * Access to the timer associated with vibration.
-		 * It is intended for testing purposes only.
+		 * This property should only be used in automated tests.
 		**/
 		vibrateTimer: vibrateTimer,
 
@@ -46,7 +46,7 @@ ngCordovaMocks.factory('$cordovaVibration', ['$timeout', function($timeout) {
 		 *
 		 * @description
 		 * A flag that signals whether vibration is active.
-		 * It is intended for testing purposes only.
+		 * This property should only be used in automated tests.
 		**/				
 		isVibrating: isVibrating,
 
