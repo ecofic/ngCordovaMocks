@@ -17,20 +17,37 @@
 
 /**
  * @ngdoc service
- * @name cordovaFile
+ * @name ngCordovaMocks.cordovaFile
  *
  * @description
  * A service for testing interaction with device directories and files
  * in an app build with ngCordova.
- *
- * @example
  */ 
 ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 	var throwsError = false;
 	var fileSystem = {};
 
 	return {
+        /**
+		 * @ngdoc property
+		 * @name throwsError
+		 * @propertyOf ngCordovaMocks.cordovaFile
+		 *
+		 * @description
+		 * A flag that signals whether a promise should be rejected or not.
+		 * This property should only be used in automated tests.
+		**/
 		throwsError: throwsError,
+
+        /**
+		 * @ngdoc property
+		 * @name fileSystem
+		 * @propertyOf ngCordovaMocks.cordovaFile
+		 *
+		 * @description
+		 * A fake, in-memory file system. This is incomplete at this time.
+		 * This property should only be used in automated tests.
+		**/		
 		fileSystem: fileSystem,
 
 		checkDir: function(directory) {
