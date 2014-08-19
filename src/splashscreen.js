@@ -22,8 +22,6 @@
  * @description
  * A service for testing the splash screen
  * in an app build with ngCordova.
- *
- * @example
  */ 
 ngCordovaMocks.factory('$cordovaSplashscreen', function() {
 	var isVisible = false;
@@ -36,7 +34,7 @@ ngCordovaMocks.factory('$cordovaSplashscreen', function() {
 		 *
 		 * @description
 		 * A flag that signals whether the splash screen is visible or not.
-		 * It is intended for testing purposes only.
+		 * This property should only be used in automated tests.
 		**/		
 		isVisible: isVisible,
 
