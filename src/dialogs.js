@@ -61,9 +61,18 @@ ngCordovaMocks.factory('$cordovaDialogs', function() {
 		 * @description
 		 * The default value to be used in a prompt.
 		 * This property should only be used in automated tests.
-		**/				
+		**/
 		defaultValue: defaultValue,
 
+        /**
+		 * @ngdoc property
+		 * @name promptResponse
+		 * @propertyOf ngCordovaMocks.cordovaDialogs
+		 *
+		 * @description
+		 * Used to simulate a user's response to a prompt.
+		 * This property should only be used in automated tests.
+		**/
 		promptResponse: promptResponse,
 
         /**
