@@ -88,6 +88,7 @@ ngCordovaMocks.factory('$cordovaVibration', ['$timeout', function($timeout) {
 			if (this.vibrateTimer !== null) {
 				if (this.isVibrating === true) {
 					$timeout.cancel(this.vibrateTimer);
+					this.isVibrating = false;
 				}
 			}
 		}

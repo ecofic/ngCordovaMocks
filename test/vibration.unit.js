@@ -32,6 +32,18 @@ describe('ngCordovaMocks', function() {
 			$rootScope.$digest();
 
 			expect($cordovaVibration.isVibrating).toBe(true);			
-		})
+		});
+
+		it('should cancel vibration half way through', function() {
+			expect($cordovaVibration.isVibrating).toBe(false);
+			$cordovaVibration.vibrate(1000);		// Vibrate for 1 second
+
+			$timeout.flush(500);					// Fast-forward in time 500 milliseconds
+			$rootScope.$digest();
+			expect($cordovaVibration.isVibrating).toBe(true);
+
+			$cordovaVibration.cancelVibration();	// Stop the vibration
+			expect($cordovaVibration.isVibrating).toBe(false);
+		});
 	});
 })
