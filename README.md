@@ -8,8 +8,8 @@ ngCordovaMocks is a set of services designed to complement [ngCordova](http://ww
 during development and testing. It was designed for developers, engineers, and architects who 
 prefer to use the browser before testing on real devices. 
 
-To learn more, read the about the [introduction of ngCordovaMocks](http://www.ecofic.com/about/blog/introducing-ng-cordova-mocks).
-The article will explain how it came to be and some of its benefits.
+To learn more, read about the [introduction of ngCordovaMocks](http://www.ecofic.com/about/blog/introducing-ng-cordova-mocks).
+The article will explain how ngCordovaMocks came to be and some of its benefits.
 
 Installing ngCordovaMocks
 -------------------------

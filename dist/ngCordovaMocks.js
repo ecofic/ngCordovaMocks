@@ -21,6 +21,98 @@ var ngCordovaMocks = angular.module('ngCordovaMocks', []);
 
 /**
  * @ngdoc service
+ * @name ngCordovaMocks.cordovaBarcodeScanner
+ *
+ * @description
+ * A service for testing barcode scanner features
+ * in an app build with ngCordova.
+**/ 
+ngCordovaMocks.factory('$cordovaBarcodeScanner', ['$q', function($q) {
+	var throwsError = false;
+
+	var scannedText = '';
+	var scannedFormat = '';
+	var wasCancelled = false;
+
+	return {
+        /**
+		 * @ngdoc property
+		 * @name throwsError
+		 * @propertyOf ngCordovaMocks.cordovaBarcodeScanner
+		 *
+		 * @description
+		 * A flag that signals whether a promise should be rejected or not. 
+		 * This property should only be used in automated tests.
+		**/		
+		throwsError: throwsError,
+
+        /**
+		 * @ngdoc property
+		 * @name scannedText
+		 * @propertyOf ngCordovaMocks.cordovaBarcodeScanner
+		 *
+		 * @description
+		 * Used to simulate the result.text property of a
+		 * successful scan. For more information, see the text at 
+		 * https://github.com/wildabeast/BarcodeScanner/#using-the-plugin
+		 * This property should only be used in automated tests.
+		**/		
+		scannedText: scannedText,
+
+        /**
+		 * @ngdoc property
+		 * @name scannedFormat
+		 * @propertyOf ngCordovaMocks.cordovaBarcodeScanner
+		 *
+		 * @description
+		 * Used to simulate the result.format property of a
+		 * successful scan. For more information, see the text at 
+		 * https://github.com/wildabeast/BarcodeScanner/#using-the-plugin
+		 * This property should only be used in automated tests.
+		**/
+		scannedFormat: scannedFormat,
+
+        /**
+		 * @ngdoc property
+		 * @name wasCancelled
+		 * @propertyOf ngCordovaMocks.cordovaBarcodeScanner
+		 *
+		 * @description
+		 * Used to simulate the result.cancelled property of a
+		 * successful scan. For more information, see the text at 
+		 * https://github.com/wildabeast/BarcodeScanner/#using-the-plugin
+		 * This property should only be used in automated tests.
+		**/
+		wasCancelled: wasCancelled,
+
+		scan: function() {
+			var defer = $q.defer();
+			if (this.throwsError) {
+				defer.reject('There was an error scanning.');
+			} else {
+				defer.resolve({text: this.scannedText, format: this.scannedFormat, cancelled: this.wasCancelled });
+			}
+			return defer.promise;
+		},
+
+		encode: function(type, data) {
+			this.scannedFormat = type;
+			this.scannedText = data;
+
+			var defer = $q.defer();
+			if (this.throwsError) {
+				defer.reject('There was an error encoding the data.');
+			} else {
+				defer.resolve();
+			}
+			return defer.promise;
+		}		
+	};
+}]);
+
+
+/**
+ * @ngdoc service
  * @name ngCordovaMocks.cordovaCamera
  *
  * @description
@@ -668,9 +760,18 @@ ngCordovaMocks.factory('$cordovaDialogs', function() {
 		 * @description
 		 * The default value to be used in a prompt.
 		 * This property should only be used in automated tests.
-		**/				
+		**/
 		defaultValue: defaultValue,
 
+        /**
+		 * @ngdoc property
+		 * @name promptResponse
+		 * @propertyOf ngCordovaMocks.cordovaDialogs
+		 *
+		 * @description
+		 * Used to simulate a user's response to a prompt.
+		 * This property should only be used in automated tests.
+		**/
 		promptResponse: promptResponse,
 
         /**
@@ -1063,8 +1164,6 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
  * @description
  * A service for testing features related to a user's locale and timezone.
  * in an app build with ngCordova.
- *
- * @example
  */ 
 ngCordovaMocks.factory('$cordovaGlobalization', ['$q', function($q) {
 	var throwsError = false;
@@ -1079,8 +1178,8 @@ ngCordovaMocks.factory('$cordovaGlobalization', ['$q', function($q) {
 		 * @propertyOf ngCordovaMocks.cordovaGlobalization
 		 *
 		 * @description
-		 * A flag that signals whether a promise should be
-		 * rejected or not. It is intended for testing purposes only.
+		 * A flag that signals whether a promise should be rejected or not. 
+		 * This property should only be used in automated tests.
 		**/				
 		throwsError: throwsError,
 
@@ -1091,7 +1190,7 @@ ngCordovaMocks.factory('$cordovaGlobalization', ['$q', function($q) {
 		 *
 		 * @description
 		 * The user's preferred language.
-		 * It is intended for testing purposes only.
+		 * This property should only be used in automated tests.
 		**/						
 		preferredLanguage: preferredLanguage,
 
@@ -1102,7 +1201,7 @@ ngCordovaMocks.factory('$cordovaGlobalization', ['$q', function($q) {
 		 *
 		 * @description
 		 * The name of the user's locale.
-		 * It is intended for testing purposes only.
+		 * This property should only be used in automated tests.
 		**/			
 		localeName: localeName,
 
@@ -1113,7 +1212,7 @@ ngCordovaMocks.factory('$cordovaGlobalization', ['$q', function($q) {
 		 *
 		 * @description
 		 * The first day of the week based on the user's locale.
-		 * It is intended for testing purposes only.
+		 * This property should only be used in automated tests.
 		**/					
 		firstDayOfWeek: firstDayOfWeek,
 
@@ -1297,17 +1396,40 @@ ngCordovaMocks.factory('$cordovaGlobalization', ['$q', function($q) {
 }]);
 
 
-/*
- * A service for testing networked fetures 
+/**
+ * @ngdoc service
+ * @name ngCordovaMocks.cordovaNetwork
+ *
+ * @description
+ * A service for testing networked fetures
  * in an app build with ngCordova.
- */ 
+ */  
 ngCordovaMocks.factory('$cordovaNetwork', function () {
 	var connectionType = 'WiFi connection';
 	var isConnected = true;
 
 	return {
-		// Properties intended to mock test scenarios
+        /**
+		 * @ngdoc property
+		 * @name connectionType
+		 * @propertyOf ngCordovaMocks.cordovaNetwork
+		 *
+		 * @description
+		 * They type of connection. Values should match those found at
+		 * https://github.com/apache/cordova-plugin-network-information/blob/master/doc/index.md 
+		 * This property should only be used in automated tests.
+		**/	
 		connectionType: connectionType,
+
+        /**
+		 * @ngdoc property
+		 * @name isConnected
+		 * @propertyOf ngCordovaMocks.cordovaNetwork
+		 *
+		 * @description
+		 * A flag that signals whether the app is connected to a network. 
+		 * This property should only be used in automated tests.
+		**/			
 		isConnected: isConnected,
 
 		getNetwork: function () {
@@ -1332,8 +1454,6 @@ ngCordovaMocks.factory('$cordovaNetwork', function () {
  * @description
  * A service for testing the splash screen
  * in an app build with ngCordova.
- *
- * @example
  */ 
 ngCordovaMocks.factory('$cordovaSplashscreen', function() {
 	var isVisible = false;
@@ -1346,7 +1466,7 @@ ngCordovaMocks.factory('$cordovaSplashscreen', function() {
 		 *
 		 * @description
 		 * A flag that signals whether the splash screen is visible or not.
-		 * It is intended for testing purposes only.
+		 * This property should only be used in automated tests.
 		**/		
 		isVisible: isVisible,
 
@@ -1373,8 +1493,6 @@ ngCordovaMocks.factory('$cordovaSplashscreen', function() {
  * @description
  * A service for testing the status bar
  * in an app build with ngCordova.
- *
- * @example
  */ 
 ngCordovaMocks.factory('$cordovaStatusbar', function() {
 	var isStatusBarVisible = true;
@@ -1388,7 +1506,7 @@ ngCordovaMocks.factory('$cordovaStatusbar', function() {
 		 *
 		 * @description
 		 * A flag that signals whether the status bar is visible or not.
-		 * It is intended for testing purposes only.
+		 * This property should only be used in automated tests.
 		**/		
 		isStatusBarVisible: isStatusBarVisible,
 
@@ -1399,7 +1517,7 @@ ngCordovaMocks.factory('$cordovaStatusbar', function() {
 		 *
 		 * @description
 		 * A flag that signals whether the status bar can overlay the web view.
-		 * It is intended for testing purposes only.
+		 * This property should only be used in automated tests.
 		**/			
 		canOverlayWebView: canOverlayWebView,
 
@@ -1457,7 +1575,7 @@ ngCordovaMocks.factory('$cordovaVibration', ['$timeout', function($timeout) {
 		 *
 		 * @description
 		 * Access to the timer associated with vibration.
-		 * It is intended for testing purposes only.
+		 * This property should only be used in automated tests.
 		**/
 		vibrateTimer: vibrateTimer,
 
@@ -1468,7 +1586,7 @@ ngCordovaMocks.factory('$cordovaVibration', ['$timeout', function($timeout) {
 		 *
 		 * @description
 		 * A flag that signals whether vibration is active.
-		 * It is intended for testing purposes only.
+		 * This property should only be used in automated tests.
 		**/				
 		isVibrating: isVibrating,
 
