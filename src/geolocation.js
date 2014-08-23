@@ -25,6 +25,8 @@
  */ 
 ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($interval, $q) {
 	var throwsError = false;
+	var useHostGeolocation = true;
+
 	var watchIntervals = [];
 	var locations = [];
 	var currentPosition = null;
@@ -87,6 +89,18 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 		**/						
 		nextPosition: nextPosition,
 
+        /**
+		 * @ngdoc property
+		 * @name useHostGeolocation
+		 * @propertyOf ngCordovaMocks.cordovaGeolocation
+		 *
+		 * @description
+		 * A flag that signals whether or not to try and use the host's 
+		 * (browser or otherwise) geolocation capabilities.
+		 * This property should only be used in automated tests.
+		**/
+		useHostGeolocation: useHostGeolocation,
+
 		getCurrentPosition: function(options) {
 			var defer = $q.defer();
 			if (this.throwsError) {
@@ -95,7 +109,24 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 				if (options) {
 					options = options;	// This is just to get by JSHint.
 				}
-				defer.resolve(this.currentPosition);
+
+				if (this.useHostGeolocation) {
+					if (navigator.geolocation) {
+						navigator.geolocation.getCurrentPosition(
+							function(position) {
+								this.currentPosition = position;
+								defer.resolve(this.currentPosition);
+							},
+							function(error) {
+								defer.reject(error);
+							}
+						);
+					} else {
+						defer.reject('Geolocation is not supported by this browser.');						
+					}
+				} else {
+					defer.resolve(this.currentPosition);
+				}
 			}
 			return defer.promise;
 		},
@@ -123,37 +154,45 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 								defer.reject('There was an error watching the geolocation.');
 							}
 
-							// Attempt to use nextPosition. If one isn't set,
-							// generate a random location for testing purposes.
+							// Attempt to use nextPosition.
 							var result = self.nextPosition;
 							if (result === null) {
-								// Generate a random position
-								var altitude = ((Math.random() * 100) + 1);
-								var latitude = ((Math.random() * 180) + 1) - 90;
-								var longitude = ((Math.random() * 360) + 1) - 180;
+								// Determine whether to use the host's geolocation capabilities or not
+								if (self.useHostGeolocation) {
+									if (navigator.geolocation) {
+										navigator.geolocation.getCurrentPosition(
+											function(position) {
+												self.currentPosition = position;
+												self.locations.push(position);
+												defer.resolve(position);
+											},
+											function(error) {
+												defer.reject(error);
+											}
+										);
+									} else {
+										defer.reject('Geolocation is not supported by this browser.');						
+									}
+								} else {
+									result = {
+										coords: {
+											latitude: ((Math.random() * 180) + 1) - 90,
+											longitude: ((Math.random() * 360) + 1) - 180,
+											altitude: ((Math.random() * 100) + 1),
 
-								var accuracy = ((Math.random() * 10) + 1);
-								var altitudeAccuracy = ((Math.random() * 10) + 1);
-								var heading = ((Math.random() * 360) + 1);
-								var speed = ((Math.random() * 100) + 1);
+											accuracy: ((Math.random() * 10) + 1),
+											altitudeAccuracy: ((Math.random() * 10) + 1),
+											heading: ((Math.random() * 360) + 1),
+											speed: ((Math.random() * 100) + 1)
+										},
+										timestamp: Date.now()
+									};
 
-								result = { 
-									coords: {
-										latitude: latitude,
-										longitude: longitude,
-										altitude: altitude,
-										accuracy: accuracy,
-										altitudeAccuracy: altitudeAccuracy,
-										heading: heading,
-										speed: speed
-									}, 
-									timestamp:Date.now() 
-								};
+									self.currentPosition = result;
+									self.locations.push(result);
+									defer.notify(result);
+								}
 							}
-
-							self.currentPosition = result;
-							self.locations.push(result);
-							defer.notify(result);	
 						}, 
 						delay
 					)
