@@ -25,7 +25,7 @@
  */ 
 ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($interval, $q) {
 	var throwsError = false;
-	var useHostGeolocation = true;
+	var useHostAbilities = true;
 
 	var watchIntervals = [];
 	var locations = [];
@@ -91,7 +91,7 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 
         /**
 		 * @ngdoc property
-		 * @name useHostGeolocation
+		 * @name useHostAbilities
 		 * @propertyOf ngCordovaMocks.cordovaGeolocation
 		 *
 		 * @description
@@ -99,7 +99,7 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 		 * (browser or otherwise) geolocation capabilities.
 		 * This property should only be used in automated tests.
 		**/
-		useHostGeolocation: useHostGeolocation,
+		useHostAbilities: useHostAbilities,
 
 		getCurrentPosition: function(options) {
 			var defer = $q.defer();
@@ -110,7 +110,7 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 					options = options;	// This is just to get by JSHint.
 				}
 
-				if (this.useHostGeolocation) {
+				if (this.useHostAbilities) {
 					if (navigator.geolocation) {
 						navigator.geolocation.getCurrentPosition(
 							function(position) {
@@ -158,7 +158,7 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 							var result = self.nextPosition;
 							if (result === null) {
 								// Determine whether to use the host's geolocation capabilities or not
-								if (self.useHostGeolocation) {
+								if (self.useHostAbilities) {
 									if (navigator.geolocation) {
 										navigator.geolocation.getCurrentPosition(
 											function(position) {

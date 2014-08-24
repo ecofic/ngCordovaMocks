@@ -46,7 +46,8 @@ ngCordovaMocks.factory('$cordovaCamera', ['$q', function($q) {
 				if (options) {
 					options = options;	// This is just to get by JSHint.
 				}
-				defer.resolve();
+
+				defer.resolve();					
 			}
 			return defer.promise;
 		}

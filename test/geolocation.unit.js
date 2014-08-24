@@ -20,7 +20,7 @@ describe('ngCordovaMocks', function() {
 		it('should get the current position', function (done) {
 			var expected = { x:1, y:1, z:1, timestamp:Date() };
 			$cordovaGeolocation.currentPosition = expected;
-			$cordovaGeolocation.useHostGeolocation = false;
+			$cordovaGeolocation.useHostAbilities = false;
 
 			$cordovaGeolocation.getCurrentPosition()
 				.then(
@@ -47,7 +47,7 @@ describe('ngCordovaMocks', function() {
 		});
 
 		it('should track five locations over an interval', function() {
-			$cordovaGeolocation.useHostGeolocation = false;
+			$cordovaGeolocation.useHostAbilities = false;
 
 			var watch = $cordovaGeolocation.watchPosition(gpsOptions);
 			watch.promise.then(
@@ -65,7 +65,7 @@ describe('ngCordovaMocks', function() {
 		});
 
 		it('should clear a created watch', function() {
-			$cordovaGeolocation.useHostGeolocation = false;
+			$cordovaGeolocation.useHostAbilities = false;
 
 			var watch = $cordovaGeolocation.watchPosition(gpsOptions);
 			watch.promise.then(
