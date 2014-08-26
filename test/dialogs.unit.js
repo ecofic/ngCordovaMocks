@@ -12,6 +12,7 @@ describe('ngCordovaMocks', function() {
 
 		it('should alert the user', function() {
 			var message = 'Hello. World.';
+			$cordovaDialogs.useHostAbilities = false;
 			$cordovaDialogs.alert(message);
 
 			expect($cordovaDialogs.dialogText).toBe(message);
@@ -19,6 +20,7 @@ describe('ngCordovaMocks', function() {
 
 		it('should ask for confirmation', function() {
 			var confirmation = 'Are you sure?';
+			$cordovaDialogs.useHostAbilities = false;			
 			$cordovaDialogs.confirm(confirmation);
 
 			expect($cordovaDialogs.dialogText).toBe(confirmation);
@@ -27,6 +29,7 @@ describe('ngCordovaMocks', function() {
 		it('should prompt the user', function() {
 			// Pretend that user enters '21'
 			var promptResponse = '21';
+			$cordovaDialogs.useHostAbilities = false;			
 			$cordovaDialogs.promptResponse = promptResponse;
 
 			// Simulate the prompt

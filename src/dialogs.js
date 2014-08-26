@@ -29,6 +29,7 @@ ngCordovaMocks.factory('$cordovaDialogs', function() {
 	var defaultValue = '';
 	var promptResponse = '';
 	var beepCount = 0;
+	var useHostAbilities = true;
 
 	return {
         /**
@@ -97,29 +98,58 @@ ngCordovaMocks.factory('$cordovaDialogs', function() {
 		**/		
 		beepCount: beepCount,
 
+        /**
+		 * @ngdoc property
+		 * @name useHostAbilities
+		 * @propertyOf ngCordovaMocks.cordovaDialogs
+		 *
+		 * @description
+		 * A flag that signals whether or not to try and use the host's 
+		 * (browser or otherwise) prompting capabilities.
+		 * This property should only be used in automated tests.
+		**/
+		useHostAbilities: useHostAbilities,		
+
 		alert: function(message, callback, title, buttonName) {
-			this.dialogText = message;
-			this.dialogTitle = title;
-			this.buttonLabels.push(buttonName);
+			if (this.useHostAbilities) {
+				// NOTE: The window.alert method doesn't support a title or callbacks.				
+				alert(message);
+			} else {
+				this.dialogText = message;
+				this.dialogTitle = title;
+				this.buttonLabels.push(buttonName);				
+			}
 		},
 
 		confirm: function(message, callback, title, buttonName) {
-			this.dialogText = message;
-			this.dialogTitle = title;
-			this.buttonLabels.push(buttonName);
+			if (this.useHostAbilities) {
+				// NOTE: The window.confirm method doesn't support a title or custom button naming.
+				var result = confirm(message);
+				callback(result);
+			} else {
+				this.dialogText = message;
+				this.dialogTitle = title;
+				this.buttonLabels.push(buttonName);				
+			}
 		},
 
 		prompt: function(message, promptCallback, title, buttonLabels, defaultText) {
-			this.dialogText = message;
-			this.dialogTitle = title;
-			this.defaultValue = defaultText;
+			if (this.useHostAbilities) {
+				// NOTE: The window.prompt method doesn't support a title or custom button naming.
+				var result = prompt(message, defaultText);
+				promptCallback(result);				
+			} else {
+				this.dialogText = message;
+				this.dialogTitle = title;
+				this.defaultValue = defaultText;
 
-			for (var i=0; i<buttonLabels.length; i++) {
-				this.buttonLabels.push(buttonLabels[i]);
-			}
+				for (var i=0; i<buttonLabels.length; i++) {
+					this.buttonLabels.push(buttonLabels[i]);
+				}
 
-			if (promptCallback) {
-				promptCallback(this.promptResponse);
+				if (promptCallback) {
+					promptCallback(this.promptResponse);
+				}
 			}
 		},
 

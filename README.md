@@ -1,5 +1,5 @@
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
-[![Version](http://img.shields.io/badge/version-0.6.2-orange.svg?style=flat)](https://www.ecofic.com)
+[![Version](http://img.shields.io/badge/version-0.7.0-yellow.svg?style=flat)](https://www.ecofic.com)
 
 ngCordovaMocks
 ==============
