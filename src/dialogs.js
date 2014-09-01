@@ -125,7 +125,7 @@ ngCordovaMocks.factory('$cordovaDialogs', function() {
 			if (this.useHostAbilities) {
 				// NOTE: The window.confirm method doesn't support a title or custom button naming.
 				var result = confirm(message);
-				callback(result);
+				callback(result ? 2 : 1);
 			} else {
 				this.dialogText = message;
 				this.dialogTitle = title;
