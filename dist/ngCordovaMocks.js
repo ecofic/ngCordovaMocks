@@ -17,6 +17,67 @@
 
 'use strict';
 var ngCordovaMocks = angular.module('ngCordovaMocks', []);
+ngCordovaMocks.factory('$cordovaBackgroundGeolocation', ['$interval', '$q',
+	function ($interval, $q) {
+		var throwsError = false;
+		var currentLocation  = null;
+		var err = {status: 'error'};
+		var result = {status: 'ok'};
+
+		return {
+
+			throwsError: throwsError,
+
+			currentLocation: currentLocation,
+
+
+			init: function () {
+				return currentLocation;
+			},
+
+			configure: function (options) {
+				if(options){console.log("");} //jshint
+
+				this.init();
+				var q = $q.defer();
+
+				if(throwsError){
+					q.reject(err);
+				}else{
+					q.resolve(result);
+				}
+
+				this.start();
+
+				return q.promise;
+			},
+
+			start: function () {
+				var q = $q.defer();
+
+				if(throwsError){
+					q.reject(err);
+				}else{
+					q.resolve(result);
+				}
+
+				return q.promise;
+			},
+
+			stop: function () {
+				var q = $q.defer();
+
+				if(throwsError){
+					q.reject(err);
+				}else{
+					q.resolve(result);
+				}
+
+				return q.promise;
+			}
+		};
+	}
+]);
 
 
 /**
@@ -1888,6 +1949,109 @@ ngCordovaMocks.factory('$cordovaStatusbar', function() {
 		}
 	};
 });
+
+ngCordovaMocks.factory('$cordovaToast', ['$q',
+	function ($q) {
+		var throwsError = false;
+
+		return {
+			/**
+			 * @ngdoc property
+			 * @name throwsError
+			 * @propertyOf ngCordovaMocks.cordovaCamera
+			 *
+			 * @description
+			 * A flag that signals whether a promise should be rejected or not.
+			 * This property should only be used in automated tests.
+			 **/
+			throwsError: throwsError,
+
+			showShortTop: function (message) {
+				if(message){console.log("");} //jshint
+
+				var q = $q.defer();
+				if (this.throwsError) {
+					q.reject('There was an error');
+				} else {
+					q.resolve();
+				}
+				return q.promise;
+			},
+
+			showShortCenter: function (message) {
+				if(message){console.log("");} //jshint
+
+				var q = $q.defer();
+				if (this.throwsError) {
+					q.reject('There was an error');
+				} else {
+					q.resolve();
+				}
+				return q.promise;
+			},
+
+			showShortBottom: function (message) {
+				if(message){console.log("");} //jshint
+
+				var q = $q.defer();
+				if (this.throwsError) {
+					q.reject('There was an error');
+				} else {
+					q.resolve();
+				}
+				return q.promise;
+			},
+
+			showLongTop: function (message) {
+
+				var q = $q.defer();
+				window.plugins.toast.showLongTop(message, function (response) {
+					q.resolve(response);
+				}, function (error) {
+					q.reject(error);
+				});
+				return q.promise;
+			},
+
+			showLongCenter: function (message) {
+				if(message){console.log("");} //jshint
+
+				var q = $q.defer();
+				if (this.throwsError) {
+					q.reject('There was an error');
+				} else {
+					q.resolve();
+				}
+				return q.promise;
+			},
+
+			showLongBottom: function (message) {
+				if(message){console.log("");} //jshint
+
+				var q = $q.defer();
+				if (this.throwsError) {
+					q.reject('There was an error');
+				} else {
+					q.resolve();
+				}
+				return q.promise;
+			},
+
+
+			show: function (message, duration, position) {
+				if(message && duration && position){console.log("");} //jshint
+
+				var q = $q.defer();
+				if (this.throwsError) {
+					q.reject('There was an error');
+				} else {
+					q.resolve();
+				}
+				return q.promise;
+			}
+		};
+	}
+]);
 
 
 /**
