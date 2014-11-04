@@ -1,6 +1,6 @@
 {
   "name": "ngCordovaMocks",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "homepage": "https://github.com/ecofic/ngCordovaMocks",
   "authors": [
     "Chad Campbell <chad.campbell@ecofic.com>"
@@ -9,7 +9,7 @@
   "main": "./dist/ngCordovaMocks.js",
   "keywords": [
     "angular",
-    "angularjs",  
+    "angularjs",
     "cordova",
     "phonegap"
   ],
