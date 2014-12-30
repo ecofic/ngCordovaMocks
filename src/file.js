@@ -22,10 +22,11 @@
  * @description
  * A service for testing interaction with device directories and files
  * in an app build with ngCordova.
- */ 
+ */
 ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 	var throwsError = false;
 	var fileSystem = {};
+    var files ={};
 
 	return {
         /**
@@ -47,10 +48,22 @@ ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 		 * @description
 		 * A fake, in-memory file system. This is incomplete at this time.
 		 * This property should only be used in automated tests.
-		**/		
+		**/
 		fileSystem: fileSystem,
 
-		checkDir: function(directory) {
+        /**
+         * @ngdoc property
+         * @name files
+         * @propertyOf ngCordovaMocks.cordovaFile
+         *
+         * @description
+         * An object used to store content of mock files
+         * This property should only be used in automated tests.
+         **/
+        files: files,
+
+
+        checkDir: function(directory) {
 			var defer = $q.defer();
 			if (this.throwsError) {
 				defer.reject('There was an error checking the directory.');
@@ -58,7 +71,7 @@ ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 				console.log(directory);
 				defer.resolve();
 			}
-			return defer.promise;			
+			return defer.promise;
 		},
 
 		createDir: function(directory, overwrite) {
@@ -70,7 +83,7 @@ ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 				console.log(overwrite);
 				defer.resolve();
 			}
-			return defer.promise;			
+			return defer.promise;
 		},
 
 		checkFile: function(directory, file) {
@@ -82,7 +95,7 @@ ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 				console.log(file);
 				defer.resolve();
 			}
-			return defer.promise;			
+			return defer.promise;
 		},
 
 		createFile: function(directory, file, overwrite) {
@@ -95,7 +108,7 @@ ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 				console.log(overwrite);
 				defer.resolve();
 			}
-			return defer.promise;			
+			return defer.promise;
 		},
 
 		removeFile: function(directory, file) {
@@ -107,32 +120,41 @@ ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 				console.log(file);
 				defer.resolve();
 			}
-			return defer.promise;			
+			return defer.promise;
 		},
 
-		writeFile: function(directory, file) {
-			var defer = $q.defer();
-			if (this.throwsError) {
-				defer.reject('There was an error writing the file.');
-			} else {
-				console.log(directory);
-				console.log(file);
-				defer.resolve();
-			}
-			return defer.promise;			
-		},
+        writeFile: function(filePath,data,options) {
+            var defer = $q.defer();
+            if (this.throwsError) {
+                defer.reject('There was an error writing the file.');
+            } else {
 
-		readFile: function(directory, file) {
-			var defer = $q.defer();
-			if (this.throwsError) {
-				defer.reject('There was an error reading the file.');
-			} else {
-				console.log(directory);
-				console.log(file);
-				defer.resolve();
-			}
-			return defer.promise;			
-		},
+                if(filePath && data){
+                   this.files[filePath] = data;
+                }
+                console.log(filePath);
+                defer.resolve();
+            }
+            return defer.promise;
+        },
+
+        readFile: function(filePath) {
+            var defer = $q.defer();
+            if (this.throwsError) {
+                defer.reject('There was an error reading the file.');
+            } else {
+
+                if(this.files[filePath]){
+                    var fileContent = this.files[filePath];
+                    console.log("File content:" + fileContent);
+                    defer.resolve(fileContent);
+                }
+                else{
+                    defer.resolve();
+                }
+            }
+            return defer.promise;
+        },
 
 		downloadFile: function(source, filePath, trust, options) {
 			var defer = $q.defer();
@@ -145,7 +167,7 @@ ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 				console.log(options);
 				defer.resolve();
 			}
-			return defer.promise;			
+			return defer.promise;
 		},
 
 		uploadFile: function(server, filePath, options) {
@@ -158,7 +180,7 @@ ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 				console.log(options);
 				defer.resolve();
 			}
-			return defer.promise;			
-		}		
+			return defer.promise;
+		}
 	};
 }]);
