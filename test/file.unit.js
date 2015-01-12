@@ -6,6 +6,8 @@ describe('ngCordovaMocks', function() {
 	describe('cordovaFile', function () {
 		var $cordovaFile = null;
 		var $rootScope = null;
+        var testFileName = "test.txt";
+        var testData = "My data object";
 
 		beforeEach(inject(function (_$cordovaFile_, _$rootScope_) {
 			$cordovaFile = _$cordovaFile_;
@@ -85,7 +87,23 @@ describe('ngCordovaMocks', function() {
 			;
 
 			$rootScope.$digest();
-		});			
+		});
+
+
+        describe('file write/read tests',function(){
+            beforeEach(function(){
+                $cordovaFile.writeFile(testFileName, testData);
+                $rootScope.$digest();
+            });
+
+            it('should return file data if file exists',function(done){
+                $cordovaFile.readFile(testFileName).then(function(data){
+                    expect(testData).toEqual(data);
+                }).finally(done);
+                $rootScope.$digest();
+            });
+        });
+
 	});
 
 	// TODO: ping the fileSystem property to detect if
