@@ -47,9 +47,4 @@ describe('ngCordovaMocks', function() {
         });
 
     });
-
-    // TODO: ping the fileSystem property to detect if
-    // - check whether directory exists or not.
-    // - overwrite works on the createDir function
-
 })
