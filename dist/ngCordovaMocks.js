@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 Ecofic LLC. All rights reserved.
+ * Copyright (c) 2015 Ecofic LLC. All rights reserved.
  * http://www.ecofic.com
 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +17,72 @@
 
 'use strict';
 var ngCordovaMocks = angular.module('ngCordovaMocks', []);
+/**
+ * Copyright (c) 2014 Ecofic LLC. All rights reserved.
+ * http://www.ecofic.com
 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *   http://www.apache.org/licenses/LICENSE-2.0
+
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
+
+/**
+ * @ngdoc service
+ * @name ngCordovaMocks.cordovaActionSheet
+ *
+ * @description
+ * The Action Sheet plugin shows a native sheet of options the user can choose from
+ */
+ngCordovaMocks.factory('$cordovaActionSheet', ['$q', function($q) {
+    var throwsError = false;
+
+    return {
+        /**
+         * @ngdoc property
+         * @name throwsError
+         * @propertyOf ngCordovaMocks.cordovaActionSheet
+         *
+         * @description
+         * A flag that signals whether a promise should be rejected or not.
+         * This property should only be used in automated tests.
+        **/
+        throwsError: throwsError,
+
+        show: function(options) {
+            var defer = $q.defer();
+            if (this.throwsError) {
+                defer.reject('There was an error showing action sheet.');
+            } else {
+                defer.resolve();
+            }
+            return defer.promise;
+        }
+    };
+}]);
+/**
+ * Copyright (c) 2014 Ecofic LLC. All rights reserved.
+ * http://www.ecofic.com
+
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *   http://www.apache.org/licenses/LICENSE-2.0
+
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
 
 /**
  * @ngdoc service
@@ -109,7 +174,22 @@ ngCordovaMocks.factory('$cordovaBarcodeScanner', ['$q', function($q) {
 		}		
 	};
 }]);
+/**
+ * Copyright (c) 2014 Ecofic LLC. All rights reserved.
+ * http://www.ecofic.com
 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *   http://www.apache.org/licenses/LICENSE-2.0
+
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
 
 /**
  * @ngdoc service
@@ -149,7 +229,22 @@ ngCordovaMocks.factory('$cordovaCamera', ['$q', function($q) {
 		}
 	};
 }]);
+/**
+ * Copyright (c) 2014 Ecofic LLC. All rights reserved.
+ * http://www.ecofic.com
 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *   http://www.apache.org/licenses/LICENSE-2.0
+
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
 
 /**
  * @ngdoc service
@@ -207,7 +302,22 @@ ngCordovaMocks.factory('$cordovaCapture', ['$q', function($q) {
 		}
 	};
 }]);
+/**
+ * Copyright (c) 2014 Ecofic LLC. All rights reserved.
+ * http://www.ecofic.com
 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *   http://www.apache.org/licenses/LICENSE-2.0
+
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
 
 /**
  * @ngdoc service
@@ -326,7 +436,22 @@ ngCordovaMocks.factory('$cordovaContacts', ['$q', function($q) {
 		}
 	};
 }]);
+/**
+ * Copyright (c) 2014 Ecofic LLC. All rights reserved.
+ * http://www.ecofic.com
 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *   http://www.apache.org/licenses/LICENSE-2.0
+
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
 
 /**
  * @ngdoc service
@@ -436,7 +561,22 @@ ngCordovaMocks.factory('$cordovaDevice', function () {
 		}
 	};
 });
+/**
+ * Copyright (c) 2014 Ecofic LLC. All rights reserved.
+ * http://www.ecofic.com
 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *   http://www.apache.org/licenses/LICENSE-2.0
+
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
 
 /**
  * @ngdoc service
@@ -573,7 +713,22 @@ ngCordovaMocks.factory('$cordovaDeviceMotion', ['$interval', '$q', function ($in
 		}
 	};
 }]);
+/**
+ * Copyright (c) 2014 Ecofic LLC. All rights reserved.
+ * http://www.ecofic.com
 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *   http://www.apache.org/licenses/LICENSE-2.0
+
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
 
  /**
  * @ngdoc service
@@ -713,7 +868,22 @@ ngCordovaMocks.factory('$cordovaDeviceOrientation', ['$interval', '$q', function
 		}
 	};
 }]);
+/**
+ * Copyright (c) 2014 Ecofic LLC. All rights reserved.
+ * http://www.ecofic.com
 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *   http://www.apache.org/licenses/LICENSE-2.0
+
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
 
 /**
  * @ngdoc service
@@ -858,7 +1028,22 @@ ngCordovaMocks.factory('$cordovaDialogs', function() {
 		}
 	};
 });
+/**
+ * Copyright (c) 2014 Ecofic LLC. All rights reserved.
+ * http://www.ecofic.com
 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *   http://www.apache.org/licenses/LICENSE-2.0
+
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
 
 /**
  * @ngdoc service
@@ -867,10 +1052,11 @@ ngCordovaMocks.factory('$cordovaDialogs', function() {
  * @description
  * A service for testing interaction with device directories and files
  * in an app build with ngCordova.
- */ 
+ */
 ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 	var throwsError = false;
 	var fileSystem = {};
+    var files ={};
 
 	return {
         /**
@@ -892,10 +1078,22 @@ ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 		 * @description
 		 * A fake, in-memory file system. This is incomplete at this time.
 		 * This property should only be used in automated tests.
-		**/		
+		**/
 		fileSystem: fileSystem,
 
-		checkDir: function(directory) {
+        /**
+         * @ngdoc property
+         * @name files
+         * @propertyOf ngCordovaMocks.cordovaFile
+         *
+         * @description
+         * An object used to store content of mock files
+         * This property should only be used in automated tests.
+         **/
+        files: files,
+
+
+        checkDir: function(directory) {
 			var defer = $q.defer();
 			if (this.throwsError) {
 				defer.reject('There was an error checking the directory.');
@@ -903,7 +1101,7 @@ ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 				console.log(directory);
 				defer.resolve();
 			}
-			return defer.promise;			
+			return defer.promise;
 		},
 
 		createDir: function(directory, overwrite) {
@@ -915,7 +1113,7 @@ ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 				console.log(overwrite);
 				defer.resolve();
 			}
-			return defer.promise;			
+			return defer.promise;
 		},
 
 		checkFile: function(directory, file) {
@@ -927,7 +1125,7 @@ ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 				console.log(file);
 				defer.resolve();
 			}
-			return defer.promise;			
+			return defer.promise;
 		},
 
 		createFile: function(directory, file, overwrite) {
@@ -940,7 +1138,7 @@ ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 				console.log(overwrite);
 				defer.resolve();
 			}
-			return defer.promise;			
+			return defer.promise;
 		},
 
 		removeFile: function(directory, file) {
@@ -952,32 +1150,41 @@ ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 				console.log(file);
 				defer.resolve();
 			}
-			return defer.promise;			
+			return defer.promise;
 		},
 
-		writeFile: function(directory, file) {
-			var defer = $q.defer();
-			if (this.throwsError) {
-				defer.reject('There was an error writing the file.');
-			} else {
-				console.log(directory);
-				console.log(file);
-				defer.resolve();
-			}
-			return defer.promise;			
-		},
+        writeFile: function(filePath,data,options) {
+            var defer = $q.defer();
+            if (this.throwsError) {
+                defer.reject('There was an error writing the file.');
+            } else {
 
-		readFile: function(directory, file) {
-			var defer = $q.defer();
-			if (this.throwsError) {
-				defer.reject('There was an error reading the file.');
-			} else {
-				console.log(directory);
-				console.log(file);
-				defer.resolve();
-			}
-			return defer.promise;			
-		},
+                if(filePath && data){
+                   this.files[filePath] = data;
+                }
+                console.log(filePath);
+                defer.resolve();
+            }
+            return defer.promise;
+        },
+
+        readFile: function(filePath) {
+            var defer = $q.defer();
+            if (this.throwsError) {
+                defer.reject('There was an error reading the file.');
+            } else {
+
+                if(this.files[filePath]){
+                    var fileContent = this.files[filePath];
+                    console.log("File content:" + fileContent);
+                    defer.resolve(fileContent);
+                }
+                else{
+                    defer.resolve();
+                }
+            }
+            return defer.promise;
+        },
 
 		downloadFile: function(source, filePath, trust, options) {
 			var defer = $q.defer();
@@ -990,7 +1197,7 @@ ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 				console.log(options);
 				defer.resolve();
 			}
-			return defer.promise;			
+			return defer.promise;
 		},
 
 		uploadFile: function(server, filePath, options) {
@@ -1003,11 +1210,26 @@ ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 				console.log(options);
 				defer.resolve();
 			}
-			return defer.promise;			
-		}		
+			return defer.promise;
+		}
 	};
 }]);
+/**
+ * Copyright (c) 2014 Ecofic LLC. All rights reserved.
+ * http://www.ecofic.com
 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *   http://www.apache.org/licenses/LICENSE-2.0
+
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
 
 /**
  * @ngdoc service
@@ -1225,7 +1447,22 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 		}		
 	};
 }]);
+/**
+ * Copyright (c) 2014 Ecofic LLC. All rights reserved.
+ * http://www.ecofic.com
 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *   http://www.apache.org/licenses/LICENSE-2.0
+
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
 
 /**
  * @ngdoc service
@@ -1464,7 +1701,22 @@ ngCordovaMocks.factory('$cordovaGlobalization', ['$q', function($q) {
 		}	
 	};
 }]);
+/**
+ * Copyright (c) 2014 Ecofic LLC. All rights reserved.
+ * http://www.ecofic.com
 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *   http://www.apache.org/licenses/LICENSE-2.0
+
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
 
 /**
  * @ngdoc service
@@ -1515,7 +1767,22 @@ ngCordovaMocks.factory('$cordovaNetwork', function () {
 		}
 	};
 });
+/**
+ * Copyright (c) 2014 Ecofic LLC. All rights reserved.
+ * http://www.ecofic.com
 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *   http://www.apache.org/licenses/LICENSE-2.0
+
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
 
 /**
  * @ngdoc service
@@ -1780,7 +2047,22 @@ ngCordovaMocks.factory('$cordovaSocialSharing', ['$q', function($q) {
 		}
 	};
 }]);
+/**
+ * Copyright (c) 2014 Ecofic LLC. All rights reserved.
+ * http://www.ecofic.com
 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *   http://www.apache.org/licenses/LICENSE-2.0
+
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
 
 /**
  * @ngdoc service
@@ -1820,7 +2102,22 @@ ngCordovaMocks.factory('$cordovaSpinnerDialog', function() {
     };
 });
 
+/**
+ * Copyright (c) 2014 Ecofic LLC. All rights reserved.
+ * http://www.ecofic.com
 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *   http://www.apache.org/licenses/LICENSE-2.0
+
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
 
 /**
  * @ngdoc service
@@ -1859,7 +2156,22 @@ ngCordovaMocks.factory('$cordovaSplashscreen', function() {
 		}
 	};
 });
+/**
+ * Copyright (c) 2014 Ecofic LLC. All rights reserved.
+ * http://www.ecofic.com
 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *   http://www.apache.org/licenses/LICENSE-2.0
+
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
 
 /**
  * @ngdoc service
@@ -1928,7 +2240,22 @@ ngCordovaMocks.factory('$cordovaStatusbar', function() {
 		}
 	};
 });
+/**
+ * Copyright (c) 2014 Ecofic LLC. All rights reserved.
+ * http://www.ecofic.com
 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *   http://www.apache.org/licenses/LICENSE-2.0
+
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
 
 /**
  * @ngdoc service
