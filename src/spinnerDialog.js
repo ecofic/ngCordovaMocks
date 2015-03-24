@@ -24,31 +24,32 @@
  * in an app build with ngCordova.
  */
 ngCordovaMocks.factory('$cordovaSpinnerDialog', function() {
-    var isVisible = false;
+  var isVisible = false;
 
-    return {
-        /**
-         * @ngdoc property
-         * @name isVisible
-         * @propertyOf ngCordovaMocks.cordovaSpinnerDialog
-         *
-         * @description
-         * A flag that signals whether the spinner dialog is visible or not.
-         * This property should only be used in automated tests.
-        **/
-        isVisible: isVisible,
+  return {
+    /**
+     * @ngdoc property
+     * @name isVisible
+     * @propertyOf ngCordovaMocks.cordovaSpinnerDialog
+     *
+     * @description
+     * A flag that signals whether the spinner dialog is visible or not.
+     * This property should only be used in automated tests.
+    **/
+    isVisible: isVisible,
 
-        hide: function() {
-            // do nothing. everything happens behind the scenes in this case.
-            // its a stub that is present for completeness.
-            this.isVisible = false;
-            return true;
-        },
-        show: function() {
-            // do nothing. everything happens behind the scenes in this case.
-            // its a stub that is present for completeness.
-            this.isVisible = true;
-            return true;
-        }
-    };
+    hide: function() {
+      // do nothing. everything happens behind the scenes in this case.
+      // its a stub that is present for completeness.
+      this.isVisible = false;
+      return true;
+    },
+
+    show: function() {
+      // do nothing. everything happens behind the scenes in this case.
+      // its a stub that is present for completeness.
+      this.isVisible = true;
+      return true;
+    }
+  };
 });

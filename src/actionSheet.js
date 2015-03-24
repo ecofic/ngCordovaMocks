@@ -23,28 +23,29 @@
  * The Action Sheet plugin shows a native sheet of options the user can choose from
  */
 ngCordovaMocks.factory('$cordovaActionSheet', ['$q', function($q) {
-    var throwsError = false;
+  var throwsError = false;
 
-    return {
-        /**
-         * @ngdoc property
-         * @name throwsError
-         * @propertyOf ngCordovaMocks.cordovaActionSheet
-         *
-         * @description
-         * A flag that signals whether a promise should be rejected or not.
-         * This property should only be used in automated tests.
-        **/
-        throwsError: throwsError,
+  return {
+    /**
+     * @ngdoc property
+     * @name throwsError
+     * @propertyOf ngCordovaMocks.cordovaActionSheet
+     *
+     * @description
+     * A flag that signals whether a promise should be rejected or not.
+     * This property should only be used in automated tests.
+    **/
+    throwsError: throwsError,
 
-        show: function(options) {
-            var defer = $q.defer();
-            if (this.throwsError) {
-                defer.reject('There was an error showing action sheet.');
-            } else {
-                defer.resolve();
-            }
-            return defer.promise;
-        }
-    };
+    show: function() {
+      var defer = $q.defer();
+
+      if (this.throwsError) {
+        defer.reject('There was an error showing action sheet.');
+      } else {
+        defer.resolve();
+      }
+      return defer.promise;
+    }
+  };
 }]);

@@ -22,7 +22,7 @@
  * @description
  * A service for testing location services
  * in an app build with ngCordova.
- */ 
+ */
 ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($interval, $q) {
 	var throwsError = false;
 	var useHostAbilities = true;
@@ -39,7 +39,7 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 		 * @propertyOf ngCordovaMocks.cordovaGeolocation
 		 *
 		 * @description
-		 * A flag that signals whether a promise should be rejected or not. 
+		 * A flag that signals whether a promise should be rejected or not.
 		 * This property should only be used in automated tests.
 		**/
 		throwsError: throwsError,
@@ -52,7 +52,7 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 		 * @description
 		 * The collection of watchers that are currently active.
 		 * This property should only be used in automated tests.
-		**/		
+		**/
 		watchIntervals: watchIntervals,
 
         /**
@@ -63,7 +63,7 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 		 * @description
 		 * The collection of 'locations' that have been logged.
 		 * This property should only be used in automated tests.
-		**/				
+		**/
 		locations: locations,
 
         /**
@@ -74,7 +74,7 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 		 * @description
 		 * The last location logged.
 		 * This property should only be used in automated tests.
-		**/						
+		**/
 		currentPosition: currentPosition,
 
         /**
@@ -86,7 +86,7 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 		 * The position to be logged the next time that a watcher
 		 * gets the location.
 		 * This property should only be used in automated tests.
-		**/						
+		**/
 		nextPosition: nextPosition,
 
         /**
@@ -95,7 +95,7 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 		 * @propertyOf ngCordovaMocks.cordovaGeolocation
 		 *
 		 * @description
-		 * A flag that signals whether or not to try and use the host's 
+		 * A flag that signals whether or not to try and use the host's
 		 * (browser or otherwise) geolocation capabilities.
 		 * This property should only be used in automated tests.
 		**/
@@ -122,7 +122,7 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 							}
 						);
 					} else {
-						defer.reject('Geolocation is not supported by this browser.');						
+						defer.reject('Geolocation is not supported by this browser.');
 					}
 				} else {
 					defer.resolve(this.currentPosition);
@@ -144,7 +144,7 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 				var delay = 1000;
 				if (options && options.timeout) {
 					delay = options.timeout;
-				}				
+				}
 
 				this.watchIntervals.push({
 					watchId: watchId,
@@ -171,7 +171,7 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 											}
 										);
 									} else {
-										defer.reject('Geolocation is not supported by this browser.');						
+										defer.reject('Geolocation is not supported by this browser.');
 									}
 								} else {
 									result = {
@@ -193,7 +193,7 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 									defer.notify(result);
 								}
 							}
-						}, 
+						},
 						delay
 					)
 				});
@@ -202,11 +202,11 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 			return {
 				watchId: watchId,
 				promise: defer.promise
-			};						
+			};
 		},
 
 		clearWatch: function (watchId) {
-			var defer = $q.defer();			
+			var defer = $q.defer();
 			if (watchId) {
 				if (this.throwsError) {
 					defer.reject('Unable to clear watch.');
@@ -228,6 +228,6 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 				defer.reject('Unable to clear watch. No watch ID provided.');
 			}
 			return defer.promise;
-		}		
+		}
 	};
 }]);
