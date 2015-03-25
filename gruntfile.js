@@ -8,18 +8,18 @@
 module.exports = function (grunt) {
     grunt.initConfig({
         moduleInit: '\n\'use strict\';\n' +
-                    'var ngCordovaMocks = angular.module(\'ngCordovaMocks\', []);',
+            'var ngCordovaMocks = angular.module(\'ngCordovaMocks\', []);',
         banner: '/**\n * Copyright (c) <%= grunt.template.today("yyyy") %> Ecofic LLC. All rights reserved.\n' +
-                ' * http://www.ecofic.com\n\n' +
-                ' * Licensed under the Apache License, Version 2.0 (the "License");\n' +
-                ' * you may not use this file except in compliance with the License.\n' +
-                ' * You may obtain a copy of the License at\n' +
-                ' *   http://www.apache.org/licenses/LICENSE-2.0\n\n' +
-                ' * Unless required by applicable law or agreed to in writing, software\n' +
-                ' * distributed under the License is distributed on an "AS IS" BASIS,\n' +
-                ' * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n\n' +
-                ' * See the License for the specific language governing permissions and\n' +
-                ' * limitations under the License.\n*/',
+            ' * http://www.ecofic.com\n\n' +
+            ' * Licensed under the Apache License, Version 2.0 (the "License");\n' +
+            ' * you may not use this file except in compliance with the License.\n' +
+            ' * You may obtain a copy of the License at\n' +
+            ' *   http://www.apache.org/licenses/LICENSE-2.0\n\n' +
+            ' * Unless required by applicable law or agreed to in writing, software\n' +
+            ' * distributed under the License is distributed on an "AS IS" BASIS,\n' +
+            ' * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n\n' +
+            ' * See the License for the specific language governing permissions and\n' +
+            ' * limitations under the License.\n*/',
         clean: {
             mocks: [
                 'dist/**/*'
@@ -32,7 +32,7 @@ module.exports = function (grunt) {
 
         concat: {
             mocks: {
-                src: [ 'dist/temp/*.js' ],
+                src: ['dist/temp/*.js'],
                 dest: 'dist/ngCordovaMocks.js'
             },
         },
@@ -49,7 +49,7 @@ module.exports = function (grunt) {
             },
             api: {
                 src: [
-                    'src/**/*.js', 
+                    'src/**/*.js',
                     '!src/**/*.spec.js'
                 ],
                 title: 'ngCordovaMocks Docs'
@@ -67,7 +67,7 @@ module.exports = function (grunt) {
             },
             mocks: {
                 files: {
-                    src: [ 'src/**/*.js' ]
+                    src: ['src/**/*.js']
                 }
             }
         },
@@ -87,7 +87,7 @@ module.exports = function (grunt) {
 
         replace: {
             mocks: {
-                src: [ 'src/**/*.js' ],
+                src: ['src/**/*.js'],
                 dest: 'dist/temp/',
                 replacements: [{
                     from: '<%= banner %>',
@@ -102,7 +102,9 @@ module.exports = function (grunt) {
                     'dist/ngCordovaMocks.min.js': ['dist/ngCordovaMocks.js']
                 },
                 options: {
-                    compress: true,
+                    compress: {
+                        warnings: false
+                    },
                     preserveComments: false
                 }
             }
@@ -114,10 +116,10 @@ module.exports = function (grunt) {
                     position: 'top',
                     linebreak: true,
                     banner: '<%= moduleInit %>'
-                },  
+                },
                 files: {
-                    src: [ 'dist/ngCordovaMocks.js', 'dist/ngCordovaMocks.min.js' ]
-                }                
+                    src: ['dist/ngCordovaMocks.js', 'dist/ngCordovaMocks.min.js']
+                }
             },
             mocks: {
                 options: {
@@ -126,7 +128,7 @@ module.exports = function (grunt) {
                     banner: '<%= banner %>'
                 },
                 files: {
-                    src: [ 'dist/ngCordovaMocks.js', 'dist/ngCordovaMocks.min.js' ]
+                    src: ['dist/ngCordovaMocks.js', 'dist/ngCordovaMocks.min.js']
                 }
             }
         }
@@ -136,13 +138,14 @@ module.exports = function (grunt) {
     require('load-grunt-tasks')(grunt);
 
     // show elapsed time at the end
-    require('time-grunt')(grunt);     
+    require('time-grunt')(grunt);
 
     // Setup the "test" task
-    grunt.registerTask('test', ['clean:mocks', 'replace:mocks', 
-        'concat:mocks', 'clean:temp', 'usebanner:module', 
-        'uglify:mocks', 'usebanner:mocks', 'jasmine:mocks', 'ngdocs:api']);
+    grunt.registerTask('test', ['clean:mocks', 'replace:mocks',
+        'concat:mocks', 'clean:temp', 'usebanner:module',
+        'uglify:mocks', 'usebanner:mocks', 'jasmine:mocks', 'ngdocs:api'
+    ]);
 
     // By default, lint and run all tests.
-    grunt.registerTask('default', ['jshint:mocks', 'test']);    
+    grunt.registerTask('default', ['jshint:mocks', 'test']);
 };
