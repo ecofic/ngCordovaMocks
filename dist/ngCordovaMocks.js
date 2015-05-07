@@ -42,31 +42,33 @@ var ngCordovaMocks = angular.module('ngCordovaMocks', []);
  * The Action Sheet plugin shows a native sheet of options the user can choose from
  */
 ngCordovaMocks.factory('$cordovaActionSheet', ['$q', function($q) {
-    var throwsError = false;
+  var throwsError = false;
 
-    return {
-        /**
-         * @ngdoc property
-         * @name throwsError
-         * @propertyOf ngCordovaMocks.cordovaActionSheet
-         *
-         * @description
-         * A flag that signals whether a promise should be rejected or not.
-         * This property should only be used in automated tests.
-        **/
-        throwsError: throwsError,
+  return {
+    /**
+     * @ngdoc property
+     * @name throwsError
+     * @propertyOf ngCordovaMocks.cordovaActionSheet
+     *
+     * @description
+     * A flag that signals whether a promise should be rejected or not.
+     * This property should only be used in automated tests.
+    **/
+    throwsError: throwsError,
 
-        show: function(options) {
-            var defer = $q.defer();
-            if (this.throwsError) {
-                defer.reject('There was an error showing action sheet.');
-            } else {
-                defer.resolve();
-            }
-            return defer.promise;
-        }
-    };
+    show: function() {
+      var defer = $q.defer();
+
+      if (this.throwsError) {
+        defer.reject('There was an error showing action sheet.');
+      } else {
+        defer.resolve();
+      }
+      return defer.promise;
+    }
+  };
 }]);
+
 /**
  * Copyright (c) 2014 Ecofic LLC. All rights reserved.
  * http://www.ecofic.com
@@ -1056,10 +1058,10 @@ ngCordovaMocks.factory('$cordovaDialogs', function() {
 ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 	var throwsError = false;
 	var fileSystem = {};
-    var files ={};
+  var files ={};
 
 	return {
-        /**
+    /**
 		 * @ngdoc property
 		 * @name throwsError
 		 * @propertyOf ngCordovaMocks.cordovaFile
@@ -1070,7 +1072,7 @@ ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 		**/
 		throwsError: throwsError,
 
-        /**
+    /**
 		 * @ngdoc property
 		 * @name fileSystem
 		 * @propertyOf ngCordovaMocks.cordovaFile
@@ -1081,19 +1083,19 @@ ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 		**/
 		fileSystem: fileSystem,
 
-        /**
-         * @ngdoc property
-         * @name files
-         * @propertyOf ngCordovaMocks.cordovaFile
-         *
-         * @description
-         * An object used to store content of mock files
-         * This property should only be used in automated tests.
-         **/
-        files: files,
+    /**
+     * @ngdoc property
+     * @name files
+     * @propertyOf ngCordovaMocks.cordovaFile
+     *
+     * @description
+     * An object used to store content of mock files
+     * This property should only be used in automated tests.
+     **/
+    files: files,
 
 
-        checkDir: function(directory) {
+    checkDir: function(directory) {
 			var defer = $q.defer();
 			if (this.throwsError) {
 				defer.reject('There was an error checking the directory.');
@@ -1153,38 +1155,36 @@ ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 			return defer.promise;
 		},
 
-        writeFile: function(filePath,data,options) {
-            var defer = $q.defer();
-            if (this.throwsError) {
-                defer.reject('There was an error writing the file.');
-            } else {
+    writeFile: function(filePath, data) {
+      var defer = $q.defer();
+      if (this.throwsError) {
+        defer.reject('There was an error writing the file.');
+      } else {
+        if(filePath && data){
+          this.files[filePath] = data;
+        }
+        console.log(filePath);
+        defer.resolve();
+      }
+      return defer.promise;
+    },
 
-                if(filePath && data){
-                   this.files[filePath] = data;
-                }
-                console.log(filePath);
-                defer.resolve();
-            }
-            return defer.promise;
-        },
-
-        readFile: function(filePath) {
-            var defer = $q.defer();
-            if (this.throwsError) {
-                defer.reject('There was an error reading the file.');
-            } else {
-
-                if(this.files[filePath]){
-                    var fileContent = this.files[filePath];
-                    console.log("File content:" + fileContent);
-                    defer.resolve(fileContent);
-                }
-                else{
-                    defer.resolve();
-                }
-            }
-            return defer.promise;
-        },
+    readFile: function(filePath) {
+      var defer = $q.defer();
+      if (this.throwsError) {
+        defer.reject('There was an error reading the file.');
+      } else {
+        if(this.files[filePath]){
+          var fileContent = this.files[filePath];
+          console.log("File content:" + fileContent);
+          defer.resolve(fileContent);
+        }
+        else{
+          defer.resolve();
+        }
+      }
+      return defer.promise;
+    },
 
 		downloadFile: function(source, filePath, trust, options) {
 			var defer = $q.defer();
@@ -1214,6 +1214,7 @@ ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 		}
 	};
 }]);
+
 /**
  * Copyright (c) 2014 Ecofic LLC. All rights reserved.
  * http://www.ecofic.com
@@ -2075,33 +2076,34 @@ ngCordovaMocks.factory('$cordovaSocialSharing', ['$q', function($q) {
  * in an app build with ngCordova.
  */
 ngCordovaMocks.factory('$cordovaSpinnerDialog', function() {
-    var isVisible = false;
+  var isVisible = false;
 
-    return {
-        /**
-         * @ngdoc property
-         * @name isVisible
-         * @propertyOf ngCordovaMocks.cordovaSpinnerDialog
-         *
-         * @description
-         * A flag that signals whether the spinner dialog is visible or not.
-         * This property should only be used in automated tests.
-        **/
-        isVisible: isVisible,
+  return {
+    /**
+     * @ngdoc property
+     * @name isVisible
+     * @propertyOf ngCordovaMocks.cordovaSpinnerDialog
+     *
+     * @description
+     * A flag that signals whether the spinner dialog is visible or not.
+     * This property should only be used in automated tests.
+    **/
+    isVisible: isVisible,
 
-        hide: function() {
-            // do nothing. everything happens behind the scenes in this case.
-            // its a stub that is present for completeness.
-            this.isVisible = false;
-            return true;
-        },
-        show: function() {
-            // do nothing. everything happens behind the scenes in this case.
-            // its a stub that is present for completeness.
-            this.isVisible = true;
-            return true;
-        }
-    };
+    hide: function() {
+      // do nothing. everything happens behind the scenes in this case.
+      // its a stub that is present for completeness.
+      this.isVisible = false;
+      return true;
+    },
+
+    show: function() {
+      // do nothing. everything happens behind the scenes in this case.
+      // its a stub that is present for completeness.
+      this.isVisible = true;
+      return true;
+    }
+  };
 });
 
 /**

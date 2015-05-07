@@ -26,10 +26,10 @@
 ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 	var throwsError = false;
 	var fileSystem = {};
-    var files ={};
+  var files ={};
 
 	return {
-        /**
+    /**
 		 * @ngdoc property
 		 * @name throwsError
 		 * @propertyOf ngCordovaMocks.cordovaFile
@@ -40,7 +40,7 @@ ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 		**/
 		throwsError: throwsError,
 
-        /**
+    /**
 		 * @ngdoc property
 		 * @name fileSystem
 		 * @propertyOf ngCordovaMocks.cordovaFile
@@ -51,19 +51,19 @@ ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 		**/
 		fileSystem: fileSystem,
 
-        /**
-         * @ngdoc property
-         * @name files
-         * @propertyOf ngCordovaMocks.cordovaFile
-         *
-         * @description
-         * An object used to store content of mock files
-         * This property should only be used in automated tests.
-         **/
-        files: files,
+    /**
+     * @ngdoc property
+     * @name files
+     * @propertyOf ngCordovaMocks.cordovaFile
+     *
+     * @description
+     * An object used to store content of mock files
+     * This property should only be used in automated tests.
+     **/
+    files: files,
 
 
-        checkDir: function(directory) {
+    checkDir: function(directory) {
 			var defer = $q.defer();
 			if (this.throwsError) {
 				defer.reject('There was an error checking the directory.');
@@ -123,38 +123,36 @@ ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 			return defer.promise;
 		},
 
-        writeFile: function(filePath,data,options) {
-            var defer = $q.defer();
-            if (this.throwsError) {
-                defer.reject('There was an error writing the file.');
-            } else {
+    writeFile: function(filePath, data) {
+      var defer = $q.defer();
+      if (this.throwsError) {
+        defer.reject('There was an error writing the file.');
+      } else {
+        if(filePath && data){
+          this.files[filePath] = data;
+        }
+        console.log(filePath);
+        defer.resolve();
+      }
+      return defer.promise;
+    },
 
-                if(filePath && data){
-                   this.files[filePath] = data;
-                }
-                console.log(filePath);
-                defer.resolve();
-            }
-            return defer.promise;
-        },
-
-        readFile: function(filePath) {
-            var defer = $q.defer();
-            if (this.throwsError) {
-                defer.reject('There was an error reading the file.');
-            } else {
-
-                if(this.files[filePath]){
-                    var fileContent = this.files[filePath];
-                    console.log("File content:" + fileContent);
-                    defer.resolve(fileContent);
-                }
-                else{
-                    defer.resolve();
-                }
-            }
-            return defer.promise;
-        },
+    readFile: function(filePath) {
+      var defer = $q.defer();
+      if (this.throwsError) {
+        defer.reject('There was an error reading the file.');
+      } else {
+        if(this.files[filePath]){
+          var fileContent = this.files[filePath];
+          console.log("File content:" + fileContent);
+          defer.resolve(fileContent);
+        }
+        else{
+          defer.resolve();
+        }
+      }
+      return defer.promise;
+    },
 
 		downloadFile: function(source, filePath, trust, options) {
 			var defer = $q.defer();
