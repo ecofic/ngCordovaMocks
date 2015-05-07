@@ -5,7 +5,7 @@ describe('ngCordovaMocks', function() {
 
 	describe('cordovaGeolocation', function () {
 		var count = 0;
-		var $interval = null;		
+		var $interval = null;
 		var $rootScope = null;
 		var $cordovaGeolocation = null;
 		var gpsOptions = {};
@@ -43,7 +43,7 @@ describe('ngCordovaMocks', function() {
 				.finally(function() { done(); })
 			;
 
-			$rootScope.$digest();			
+			$rootScope.$digest();
 		});
 
 		it('should track five locations over an interval', function() {
@@ -81,6 +81,42 @@ describe('ngCordovaMocks', function() {
 			$rootScope.$digest();
 
 			expect(count).toBe(5);
-		});		
+		});
+
+		describe('useHostAbilities = true', function() {
+			var mockedGeolocation = false;
+
+			beforeEach(function() {
+				if (!navigator.geolocation) {
+					mockedGeolocation = true;
+
+					navigator.geolocation = {
+						getCurrentPosition: jasmine.createSpy('getCurrentPosition()')
+					}
+				} else {
+					spyOn(navigator.geolocation, 'getCurrentPosition');
+				}
+			});
+
+			afterEach(function() {
+				if (mockedGeolocation) {
+					delete navigator.geolocation;
+				}
+			})
+
+			it('should make a request to `geolocation` api if no expectation is given', function() {
+				$cordovaGeolocation.getCurrentPosition();
+				expect(navigator.geolocation.getCurrentPosition).toHaveBeenCalled();
+			});
+
+			it('should pass `options` along to `gelolocation` api', function() {
+				$cordovaGeolocation.getCurrentPosition('foo');
+				expect(navigator.geolocation.getCurrentPosition).toHaveBeenCalledWith(
+					jasmine.any(Function),
+					jasmine.any(Function),
+					'foo'
+				);
+			});
+		});
 	});
 })
