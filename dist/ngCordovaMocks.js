@@ -42,31 +42,33 @@ var ngCordovaMocks = angular.module('ngCordovaMocks', []);
  * The Action Sheet plugin shows a native sheet of options the user can choose from
  */
 ngCordovaMocks.factory('$cordovaActionSheet', ['$q', function($q) {
-    var throwsError = false;
+  var throwsError = false;
 
-    return {
-        /**
-         * @ngdoc property
-         * @name throwsError
-         * @propertyOf ngCordovaMocks.cordovaActionSheet
-         *
-         * @description
-         * A flag that signals whether a promise should be rejected or not.
-         * This property should only be used in automated tests.
-        **/
-        throwsError: throwsError,
+  return {
+    /**
+     * @ngdoc property
+     * @name throwsError
+     * @propertyOf ngCordovaMocks.cordovaActionSheet
+     *
+     * @description
+     * A flag that signals whether a promise should be rejected or not.
+     * This property should only be used in automated tests.
+    **/
+    throwsError: throwsError,
 
-        show: function(options) {
-            var defer = $q.defer();
-            if (this.throwsError) {
-                defer.reject('There was an error showing action sheet.');
-            } else {
-                defer.resolve();
-            }
-            return defer.promise;
-        }
-    };
+    show: function() {
+      var defer = $q.defer();
+
+      if (this.throwsError) {
+        defer.reject('There was an error showing action sheet.');
+      } else {
+        defer.resolve();
+      }
+      return defer.promise;
+    }
+  };
 }]);
+
 ngCordovaMocks.factory('$cordovaBackgroundGeolocation', ['$interval', '$q',
 	function ($interval, $q) {
 		var throwsError = false;
@@ -1117,10 +1119,10 @@ ngCordovaMocks.factory('$cordovaDialogs', function() {
 ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 	var throwsError = false;
 	var fileSystem = {};
-    var files ={};
+  var files ={};
 
 	return {
-        /**
+    /**
 		 * @ngdoc property
 		 * @name throwsError
 		 * @propertyOf ngCordovaMocks.cordovaFile
@@ -1131,7 +1133,7 @@ ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 		**/
 		throwsError: throwsError,
 
-        /**
+    /**
 		 * @ngdoc property
 		 * @name fileSystem
 		 * @propertyOf ngCordovaMocks.cordovaFile
@@ -1142,19 +1144,19 @@ ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 		**/
 		fileSystem: fileSystem,
 
-        /**
-         * @ngdoc property
-         * @name files
-         * @propertyOf ngCordovaMocks.cordovaFile
-         *
-         * @description
-         * An object used to store content of mock files
-         * This property should only be used in automated tests.
-         **/
-        files: files,
+    /**
+     * @ngdoc property
+     * @name files
+     * @propertyOf ngCordovaMocks.cordovaFile
+     *
+     * @description
+     * An object used to store content of mock files
+     * This property should only be used in automated tests.
+     **/
+    files: files,
 
 
-        checkDir: function(directory) {
+    checkDir: function(directory) {
 			var defer = $q.defer();
 			if (this.throwsError) {
 				defer.reject('There was an error checking the directory.');
@@ -1214,38 +1216,36 @@ ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 			return defer.promise;
 		},
 
-        writeFile: function(filePath,data,options) {
-            var defer = $q.defer();
-            if (this.throwsError) {
-                defer.reject('There was an error writing the file.');
-            } else {
+    writeFile: function(filePath, data) {
+      var defer = $q.defer();
+      if (this.throwsError) {
+        defer.reject('There was an error writing the file.');
+      } else {
+        if(filePath && data){
+          this.files[filePath] = data;
+        }
+        console.log(filePath);
+        defer.resolve();
+      }
+      return defer.promise;
+    },
 
-                if(filePath && data){
-                   this.files[filePath] = data;
-                }
-                console.log(filePath);
-                defer.resolve();
-            }
-            return defer.promise;
-        },
-
-        readFile: function(filePath) {
-            var defer = $q.defer();
-            if (this.throwsError) {
-                defer.reject('There was an error reading the file.');
-            } else {
-
-                if(this.files[filePath]){
-                    var fileContent = this.files[filePath];
-                    console.log("File content:" + fileContent);
-                    defer.resolve(fileContent);
-                }
-                else{
-                    defer.resolve();
-                }
-            }
-            return defer.promise;
-        },
+    readFile: function(filePath) {
+      var defer = $q.defer();
+      if (this.throwsError) {
+        defer.reject('There was an error reading the file.');
+      } else {
+        if(this.files[filePath]){
+          var fileContent = this.files[filePath];
+          console.log("File content:" + fileContent);
+          defer.resolve(fileContent);
+        }
+        else{
+          defer.resolve();
+        }
+      }
+      return defer.promise;
+    },
 
 		downloadFile: function(source, filePath, trust, options) {
 			var defer = $q.defer();
@@ -1275,6 +1275,7 @@ ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
 		}
 	};
 }]);
+
 /**
  * Copyright (c) 2014 Ecofic LLC. All rights reserved.
  * http://www.ecofic.com
@@ -1299,7 +1300,7 @@ ngCordovaMocks.factory('$cordovaFile', ['$q', function($q) {
  * @description
  * A service for testing location services
  * in an app build with ngCordova.
- */ 
+ */
 ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($interval, $q) {
 	var throwsError = false;
 	var useHostAbilities = true;
@@ -1316,7 +1317,7 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 		 * @propertyOf ngCordovaMocks.cordovaGeolocation
 		 *
 		 * @description
-		 * A flag that signals whether a promise should be rejected or not. 
+		 * A flag that signals whether a promise should be rejected or not.
 		 * This property should only be used in automated tests.
 		**/
 		throwsError: throwsError,
@@ -1329,7 +1330,7 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 		 * @description
 		 * The collection of watchers that are currently active.
 		 * This property should only be used in automated tests.
-		**/		
+		**/
 		watchIntervals: watchIntervals,
 
         /**
@@ -1340,7 +1341,7 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 		 * @description
 		 * The collection of 'locations' that have been logged.
 		 * This property should only be used in automated tests.
-		**/				
+		**/
 		locations: locations,
 
         /**
@@ -1351,7 +1352,7 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 		 * @description
 		 * The last location logged.
 		 * This property should only be used in automated tests.
-		**/						
+		**/
 		currentPosition: currentPosition,
 
         /**
@@ -1363,7 +1364,7 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 		 * The position to be logged the next time that a watcher
 		 * gets the location.
 		 * This property should only be used in automated tests.
-		**/						
+		**/
 		nextPosition: nextPosition,
 
         /**
@@ -1372,7 +1373,7 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 		 * @propertyOf ngCordovaMocks.cordovaGeolocation
 		 *
 		 * @description
-		 * A flag that signals whether or not to try and use the host's 
+		 * A flag that signals whether or not to try and use the host's
 		 * (browser or otherwise) geolocation capabilities.
 		 * This property should only be used in automated tests.
 		**/
@@ -1396,10 +1397,11 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 							},
 							function(error) {
 								defer.reject(error);
-							}
+							},
+							options
 						);
 					} else {
-						defer.reject('Geolocation is not supported by this browser.');						
+						defer.reject('Geolocation is not supported by this browser.');
 					}
 				} else {
 					defer.resolve(this.currentPosition);
@@ -1421,7 +1423,7 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 				var delay = 1000;
 				if (options && options.timeout) {
 					delay = options.timeout;
-				}				
+				}
 
 				this.watchIntervals.push({
 					watchId: watchId,
@@ -1448,7 +1450,7 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 											}
 										);
 									} else {
-										defer.reject('Geolocation is not supported by this browser.');						
+										defer.reject('Geolocation is not supported by this browser.');
 									}
 								} else {
 									result = {
@@ -1470,7 +1472,7 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 									defer.notify(result);
 								}
 							}
-						}, 
+						},
 						delay
 					)
 				});
@@ -1479,11 +1481,11 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 			return {
 				watchId: watchId,
 				promise: defer.promise
-			};						
+			};
 		},
 
 		clearWatch: function (watchId) {
-			var defer = $q.defer();			
+			var defer = $q.defer();
 			if (watchId) {
 				if (this.throwsError) {
 					defer.reject('Unable to clear watch.');
@@ -1505,9 +1507,10 @@ ngCordovaMocks.factory('$cordovaGeolocation', ['$interval', '$q', function($inte
 				defer.reject('Unable to clear watch. No watch ID provided.');
 			}
 			return defer.promise;
-		}		
+		}
 	};
 }]);
+
 /**
  * Copyright (c) 2014 Ecofic LLC. All rights reserved.
  * http://www.ecofic.com
@@ -2199,33 +2202,34 @@ ngCordovaMocks.factory('$cordovaSocialSharing', ['$q', function($q) {
  * in an app build with ngCordova.
  */
 ngCordovaMocks.factory('$cordovaSpinnerDialog', function() {
-    var isVisible = false;
+  var isVisible = false;
 
-    return {
-        /**
-         * @ngdoc property
-         * @name isVisible
-         * @propertyOf ngCordovaMocks.cordovaSpinnerDialog
-         *
-         * @description
-         * A flag that signals whether the spinner dialog is visible or not.
-         * This property should only be used in automated tests.
-        **/
-        isVisible: isVisible,
+  return {
+    /**
+     * @ngdoc property
+     * @name isVisible
+     * @propertyOf ngCordovaMocks.cordovaSpinnerDialog
+     *
+     * @description
+     * A flag that signals whether the spinner dialog is visible or not.
+     * This property should only be used in automated tests.
+    **/
+    isVisible: isVisible,
 
-        hide: function() {
-            // do nothing. everything happens behind the scenes in this case.
-            // its a stub that is present for completeness.
-            this.isVisible = false;
-            return true;
-        },
-        show: function() {
-            // do nothing. everything happens behind the scenes in this case.
-            // its a stub that is present for completeness.
-            this.isVisible = true;
-            return true;
-        }
-    };
+    hide: function() {
+      // do nothing. everything happens behind the scenes in this case.
+      // its a stub that is present for completeness.
+      this.isVisible = false;
+      return true;
+    },
+
+    show: function() {
+      // do nothing. everything happens behind the scenes in this case.
+      // its a stub that is present for completeness.
+      this.isVisible = true;
+      return true;
+    }
+  };
 });
 
 /**

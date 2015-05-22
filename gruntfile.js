@@ -102,9 +102,7 @@ module.exports = function (grunt) {
                     'dist/ngCordovaMocks.min.js': ['dist/ngCordovaMocks.js']
                 },
                 options: {
-                    compress: {
-                        warnings: false
-                    },
+                    compress: {},
                     preserveComments: false
                 }
             }
@@ -118,7 +116,7 @@ module.exports = function (grunt) {
                     banner: '<%= moduleInit %>'
                 },
                 files: {
-                    src: ['dist/ngCordovaMocks.js', 'dist/ngCordovaMocks.min.js']
+                    src: [ 'dist/ngCordovaMocks.js', 'dist/ngCordovaMocks.min.js' ]
                 }
             },
             mocks: {
@@ -143,8 +141,7 @@ module.exports = function (grunt) {
     // Setup the "test" task
     grunt.registerTask('test', ['clean:mocks', 'replace:mocks',
         'concat:mocks', 'clean:temp', 'usebanner:module',
-        'uglify:mocks', 'usebanner:mocks', 'jasmine:mocks', 'ngdocs:api'
-    ]);
+        'uglify:mocks', 'usebanner:mocks', 'jasmine:mocks', 'ngdocs:api']);
 
     // By default, lint and run all tests.
     grunt.registerTask('default', ['jshint:mocks', 'test']);
