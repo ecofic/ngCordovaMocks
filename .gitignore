@@ -25,3 +25,9 @@ build/Release
 bower_components
 dist/docs
 node_modules
+
+# Project directory
+.idea
+
+# Minified file
+dist/*.min.js
