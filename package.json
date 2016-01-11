@@ -2,38 +2,45 @@
   "name": "ngCordovaMocks",
   "version": "0.1.0",
   "description": "A mock library for ngCordova.",
-  "readme":"N/A",
+  "readme": "N/A",
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": {
-    "name" : "Chad Campbell",
-    "email" : "chad.campbell@ecofic.com",
-    "url" : "http://www.ecofic.com/contact/chad-campbell"
+    "name": "Chad Campbell",
+    "email": "chad.campbell@ecofic.com",
+    "url": "http://www.ecofic.com/contact/chad-campbell"
   },
-  "repository" : {
-    "type":"git",
-    "url":"git://github.com/ecofic/ngCordovaMocks"
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ecofic/ngCordovaMocks"
   },
-  "bugs": { 
-    "web": "http://github.com/ecofic/ngCordovaMocks/issues/" 
-  },  
+  "bugs": {
+    "web": "http://github.com/ecofic/ngCordovaMocks/issues/"
+  },
   "devDependencies": {
-    "grunt-banner":"0.2.3",
-    "grunt-contrib-clean":"0.6.0",
+    "chalk": "^0.4.0",
+    "date-time": "^1.0.0",
+    "grunt-banner": "0.2.3",
+    "grunt-contrib-clean": "0.6.0",
     "grunt-contrib-concat": "0.4.0",
-    "grunt-contrib-jasmine": "0.7.0",    
+    "grunt-contrib-jasmine": "0.7.0",
     "grunt-contrib-jshint": "0.9.2",
-    "grunt-contrib-uglify":"0.5.1",
-    "grunt-ngdocs": "0.2.2",
-    "grunt-text-replace":"0.3.12",
-    "jasmine-core":"2.0.1",    
-    "load-grunt-tasks":"0.6.0",
+    "grunt-contrib-uglify": "^0.6.0",
+    "grunt-ngdocs": "^0.2.5",
+    "grunt-text-replace": "^0.3.12",
+    "jasmine-core": "2.0.1",
+    "jshint": "^2.5.5",
+    "load-grunt-tasks": "0.6.0",
+    "maxmin": "^1.0.0",
+    "text-table": "^0.2.0",
     "time-grunt": "0.2.x"
   },
-  "licenses": [{
-    "type":"Apache",
-    "url":"http://www.apache.org/licenses/LICENSE-2.0.html"
-  }]
+  "licenses": [
+    {
+      "type": "Apache",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  ]
 }
